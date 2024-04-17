@@ -1,0 +1,3 @@
+s3:
+  bucket: rent-gadget
+  endpoint: "https://storage.yandexcloud.net"

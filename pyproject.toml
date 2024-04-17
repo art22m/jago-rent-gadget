@@ -1,0 +1,14 @@
+[tool.poetry]
+name = "jago-rent-gadget"
+version = "0.1.0"
+description = "GadgetRent service by Jago team"
+authors = ["Artem Murashko <art22m@yandex-team.ru>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

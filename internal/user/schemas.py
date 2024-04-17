@@ -1,5 +1,7 @@
 from pydantic import BaseModel
 
+from internal.item.schemas import Item
+
 
 class UserBase(BaseModel):
     email: str

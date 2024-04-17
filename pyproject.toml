@@ -12,6 +12,7 @@ flake8 = "^7.0.0"
 streamlit = "^1.33.0"
 fastapi = "^0.110.1"
 pydantic = "^2.7.0"
+uvicorn = "^0.29.0"
 
 
 [build-system]

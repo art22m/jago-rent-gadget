@@ -1,0 +1,4 @@
+plugin: yacloud_compute
+yacloud_clouds: cloud-art22m
+yacloud_folders: poga
+yacloud_token_file: secrets/yacloud.token

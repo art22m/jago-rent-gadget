@@ -2,7 +2,12 @@
 name = "internal"
 version = "0.1.0"
 description = "GadgetRent service by Jago team"
-authors = ["Artem Murashko <art22m@yandex-team.ru>"]
+authors = [
+    "Artem Murashko <art22m@yandex-team.ru>",
+    "Iskander Nafikov <nafikov.iskander@mail.ru>",
+    "Eduard Zaripov <>",
+    "Vafig Khalilov <>"
+]
 readme = "README.md"
 
 [tool.poetry.dependencies]

@@ -15,8 +15,8 @@ from internal.user.router import router as user_router
 def main():
     app = FastAPI()
     Base.metadata.create_all(bind=engine)
-    app.include_router(item_router)
-    app.include_router(user_router)
+    app.include_router(item_router, prefix="/api")
+    app.include_router(user_router, prefix="/api")
 
     # Тут надо бы все инициализировать и прокидывать в классы, и классы в классы, aka DI
     # fb_config = credentials.Certificate("path/to/service.json")

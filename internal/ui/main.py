@@ -7,6 +7,7 @@ st.set_page_config(
     page_title="RentGadget",
 )
 
+
 #
 # cred = credentials.Certificate('pondering-5ff7c-c033cfade319.json')
 # firebase_admin.initialize_app(cred)

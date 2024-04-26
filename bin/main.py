@@ -6,7 +6,7 @@ import firebase_admin
 from fastapi import FastAPI
 from firebase_admin import credentials
 
-from internal.auth import Auther
+from internal.user.auth import Auther
 from internal.data.database import engine, Base
 from internal.item.router import router as item_router
 from internal.user.router import router as user_router

@@ -19,6 +19,7 @@ fastapi = "^0.110.1"
 pydantic = "^2.7.0"
 uvicorn = "^0.29.0"
 firebase-admin = "^6.5.0"
+sqlalchemy = "^2.0.29"
 pyrebase4 = "^4.7.1"
 
 

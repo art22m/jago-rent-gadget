@@ -1,40 +1,36 @@
 from fastapi import APIRouter, Depends
+from sqlalchemy.orm import Session
+
+from internal.data.database import SessionLocal
+from internal.user import service
 from internal.user.schemas import *
-import internal.utils
 
 router = APIRouter(prefix="/user", tags=["User operations"])
 
 
-@router.get("/test")
-async def test(user=Depends(internal.utils.validate_firebase)):
-    """Test endpoint that depends on authenticated firebase"""
-    print(user)
-    return user
+def get_db():
+    db = SessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()
 
 
-@router.post("/", response_model=User)
-def create_user(user: UserCreate):
-    return User(
-        **{"id": 5, "owner_id": 5, "title": user.title, "description": user.description}
-    )
+@router.post("/", response_model=UserDto)
+def create_user(user: UserCreateDto, db: Session = Depends(get_db)):
+    return service.create_user(db, user)
 
 
-@router.get("/", response_model=list[User])
-def get_users():
-    return [
-        User(**{"id": 5, "owner_id": 5, "title": "TITLE", "description": "DESCRIPTION"})
-    ]
+@router.get("/", response_model=list[UserDto])
+def get_users(db: Session = Depends(get_db)):
+    return service.get_users(db)
 
 
-@router.get("/{user_id}", response_model=User)
-def get_user(user_id: int):
-    return User(
-        **{"id": user_id, "owner_id": 5, "title": "TITLE", "description": "DESCRIPTION"}
-    )
+@router.get("/{user_id}", response_model=UserDto)
+def get_user(user_id: int, db: Session = Depends(get_db)):
+    return service.get_user(db, user_id=user_id)
 
 
-@router.put("/", response_model=User)
-def update_user(user: UserCreate):
-    return User(
-        **{"id": 5, "owner_id": 5, "title": "TITLE", "description": "DESCRIPTION"}
-    )
+@router.put("/", response_model=UserDto)
+def update_user(user: UserUpdateDto, db: Session = Depends(get_db)):
+    service.update_user(db, user_update_dto=user)

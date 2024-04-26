@@ -3,17 +3,21 @@ from pydantic import BaseModel
 from internal.item.schemas import Item
 
 
-class UserBase(BaseModel):
+class UserCreateDto(BaseModel):
     email: str
+    name: str
 
 
-class UserCreate(UserBase):
-    password: str
-
-
-class User(UserBase):
+class UserUpdateDto(BaseModel):
     id: int
-    is_active: bool
+    email: str
+    name: str
+
+
+class UserDto(BaseModel):
+    id: int
+    email: str
+    name: str
     items: list[Item] = []
 
     class Config:

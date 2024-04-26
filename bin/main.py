@@ -6,13 +6,15 @@ import firebase_admin
 from fastapi import FastAPI
 from firebase_admin import credentials
 
-from internal.auth import Auther
+from internal.user.auth import Auther
+from internal.data.database import engine, Base
 from internal.item.router import router as item_router
 from internal.user.router import router as user_router
 
 
 def main():
     app = FastAPI()
+    Base.metadata.create_all(bind=engine)
     app.include_router(item_router)
     app.include_router(user_router)
 

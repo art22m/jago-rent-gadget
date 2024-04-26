@@ -1,16 +1,19 @@
+from fastapi import HTTPException
 from sqlalchemy.orm import Session
 
 from internal.user import models
 from internal.user.models import User
-from internal.user.schemas import UserCreateDto, UserUpdateDto
+from internal.user.schemas import UserCreateDto, UserUpdateDto, UserDto
 
 
 def get_user(db: Session, user_id: int):
-    return db.query(User).filter(User.id == user_id).first()
+    user = db.query(User).filter(User.id == user_id).first()
+    return user
 
 
 def get_user_by_email(db: Session, email: str):
-    return db.query(User).filter(User.email == email).first()
+    user = db.query(User).filter(User.email == email).first()
+    return user
 
 
 def get_users(db: Session):
@@ -21,7 +24,9 @@ def update_user(db: Session, user_update_dto: UserUpdateDto):
     user = get_user(db, user_id=user_update_dto.id)
     user.email = user_update_dto.email
     user.name = user_update_dto.name
+    db.refresh(user)
     db.commit()
+    return user
 
 
 def create_user(db: Session, user: UserCreateDto):

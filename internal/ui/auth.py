@@ -2,6 +2,7 @@ import json
 import requests
 import streamlit as st
 
+
 def sign_in_with_email_and_password(email, password):
     request_ref = "https://www.googleapis.com/identitytoolkit/v3/relyingparty/verifyPassword?key={0}".format(
         st.secrets['FIREBASE_WEB_API_KEY'])

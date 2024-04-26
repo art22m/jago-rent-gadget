@@ -1,6 +1,10 @@
 import streamlit as st
 
 
+def check_authorization():
+    return 'user_info' in st.session_state
+
+
 def authenticated_menu():
     # Show a navigation menu for authenticated users
     st.sidebar.page_link("pages/home_page.py", label="Available Gadgets🖥")
@@ -16,15 +20,7 @@ def unauthenticated_menu():
 
 
 def menu():
-    if "role" not in st.session_state or st.session_state.role is None:
+    if not check_authorization():
         unauthenticated_menu()
         return
     authenticated_menu()
-
-
-def menu_with_redirect():
-    # Redirect users to the main page if not logged in, otherwise continue to
-    # render the navigation menu
-    if "role" not in st.session_state or st.session_state.role is None:
-        st.switch_page("app.py")
-    menu()

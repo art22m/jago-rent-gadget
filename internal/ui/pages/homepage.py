@@ -1,13 +1,15 @@
 import streamlit as st
 import math
 
-sample_of_message = [{"title": "Пылесос 3000Т",
-                      "description": "пылесос очень крутой",
-                      "photo": "https://www.shutterstock.com/shutterstock/photos/2151833739/display_1500/stock-photo-portrait-of-a-young-latin-woman-with-pleasant-smile-and-crossed-arms-isolated-on-grey-wall-with-2151833739.jpg",
-                      "contacts": "some@email.ru",
-                      "money": "1000руб/ч",
-                      },
-                   ]
+sample_of_message = [
+    {
+        "title": "Пылесос 3000Т",
+        "description": "пылесос очень крутой",
+        "photo": "https://www.shutterstock.com/shutterstock/photos/2151833739/display_1500/stock-photo-portrait-of-a-young-latin-woman-with-pleasant-smile-and-crossed-arms-isolated-on-grey-wall-with-2151833739.jpg",
+        "contacts": "some@email.ru",
+        "money": "1000руб/ч",
+    },
+]
 
 
 def create_item_card(card):
@@ -36,7 +38,7 @@ number_of_rows = math.ceil((len(sample_of_message) / number_of_columns))
 for i in range(number_of_rows):
     ct = st.container()
     with ct:
-        num_current_cl = 3 #min(number_of_columns, (i + 1) * number_of_columns - len(sample_of_message)) # TODO: check
+        num_current_cl = 3  # min(number_of_columns, (i + 1) * number_of_columns - len(sample_of_message)) # TODO: check
         row_container = st.columns(num_current_cl)
         for j in range(num_current_cl):
             index = i * number_of_rows + j
@@ -46,6 +48,7 @@ for i in range(number_of_rows):
 
 def get_cards():
     message = sample_of_message
+
 
 # col1, col2, col3 = st.columns(3)
 #

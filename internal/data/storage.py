@@ -2,8 +2,14 @@ import boto3
 
 
 class Storage:
-
-    def __init__(self, service_name: str, endpoint_url: str, access_key: str, secret: str, bucket: str):
+    def __init__(
+        self,
+        service_name: str,
+        endpoint_url: str,
+        access_key: str,
+        secret: str,
+        bucket: str,
+    ):
         assert access_key is not None
         assert secret is not None
 
@@ -12,7 +18,9 @@ class Storage:
             aws_secret_access_key=secret,
         )
 
-        self.client = session.client(service_name=service_name, endpoint_url=endpoint_url)
+        self.client = session.client(
+            service_name=service_name, endpoint_url=endpoint_url
+        )
         self.bucket = bucket
 
     def save_image(self, item_id, data):
@@ -31,6 +39,7 @@ class Storage:
 
 def create_key(key):
     return f"images/{key}"
+
 
 # if __name__ == "__main__":
 #     d = "123"

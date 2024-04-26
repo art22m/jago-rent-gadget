@@ -21,27 +21,24 @@ def create_item_card(card):
         photo.image(card["photo"])
         info_container = st.container(border=True)
         with info_container:
-            price, user_info = st.columns([4, 1])
-            with price:
-                st.write(card["money"])
-            with user_info:
-                st.write(card["contacts"])
+            st.write(card["description"])
+            st.write(card["money"])
+            st.write(card["contacts"])
 
     return item_card_container
 
 
 def display_cards():
     container = st.container()
+    with container:
+        for card in sample_of_message:
+            ct = st.container()
+            with ct:
+                item_card = create_item_card(card)
 
-    number_of_columns = 3
 
-    number_of_rows = math.ceil((len(sample_of_message) / number_of_columns))
-    for i in range(number_of_rows):
-        ct = st.container()
-        with ct:
-            num_current_cl = 3  # min(number_of_columns, (i + 1) * number_of_columns - len(sample_of_message)) # TODO: check
-            row_container = st.columns(num_current_cl)
-            for j in range(num_current_cl):
-                index = i * number_of_rows + j
-                with row_container[j]:
-                    card = create_item_card(sample_of_message[index])
+def display():
+    display_cards()
+
+
+display()

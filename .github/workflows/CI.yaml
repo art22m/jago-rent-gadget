@@ -2,9 +2,9 @@ name: CI Pipeline
 
 on:
   push:
-    paths:
-      - '!ansible/**'
-      - '!**/*.md'
+    paths-ignore:
+      - 'ansible/**'
+      - '**/*.md'
 
 env:
   PYTHON_VERSION: 3.11

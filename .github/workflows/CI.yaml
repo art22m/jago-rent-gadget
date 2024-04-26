@@ -1,0 +1,67 @@
+name: CI Pipeline
+
+on:
+  push:
+    paths:
+      - '!ansible/**'
+      - '!**/*.md'
+
+env:
+  PYTHON_VERSION: 3.11
+  POETRY_VERSION: 1.7.1
+  FLAKE_CC_MAX_THRESHOLD: 10
+
+jobs:
+  lint-complexity:
+    name: Lint & Complexity Check
+    runs-on: ubuntu-22.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+      - uses: abatilo/actions-poetry@v3
+        with:
+          poetry-version: ${{ env.POETRY_VERSION }}
+      - name: Install Dependencies
+        run: poetry install
+      - name: Run flake8 Complexity
+        run: poetry run flake8 --select=C --max-complexity=${{ env.FLAKE_CC_MAX_THRESHOLD }} bin/ internal/ tests/
+      - name: Run flake8 Lint
+        run: poetry run flake8 bin/ internal/ tests/
+  security:
+    name: Security Check
+    runs-on: ubuntu-22.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+      - uses: abatilo/actions-poetry@v3
+        with:
+          poetry-version: ${{ env.POETRY_VERSION }}
+      - name: Install Dependencies
+        run: poetry install
+      - name: Run bandit
+        run: poetry run bandit -r bin/ internal/ tests/
+  test:
+    name: Test
+    runs-on: ubuntu-22.04
+    timeout-minutes: 10
+    needs:
+      - lint-complexity
+      - security
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+      - uses: abatilo/actions-poetry@v3
+        with:
+          poetry-version: ${{ env.POETRY_VERSION }}
+      - name: Install Dependencies
+        run: poetry install
+      - name: Run pytest
+        run: poetry run pytest

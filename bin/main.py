@@ -21,9 +21,9 @@ def main():
     # Тут надо бы все инициализировать и прокидывать в классы, и классы в классы, aka DI
     # fb_config = credentials.Certificate("path/to/service.json")
     pb_auth = pyrebase.initialize_app(
-        json.load(open("../configs/firebase-pyrebase.json"))
+        json.load(open("./configs/firebase-pyrebase.json"))
     ).auth()
-    cred = credentials.Certificate("../configs/firebase-adminsdk.json")
+    cred = credentials.Certificate("./configs/firebase-adminsdk.json")
     firebase_admin.initialize_app(cred)
 
     auth = Auther(pb_auth)

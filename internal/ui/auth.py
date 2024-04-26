@@ -1,46 +1,11 @@
 import json
 import requests
+import pyrebase
 import streamlit as st
 
-
-def sign_in_with_email_and_password(email, password):
-    request_ref = "https://www.googleapis.com/identitytoolkit/v3/relyingparty/verifyPassword?key={0}".format(
-        st.secrets['FIREBASE_WEB_API_KEY'])
-    headers = {"content-type": "application/json; charset=UTF-8"}
-    data = json.dumps({"email": email, "password": password, "returnSecureToken": True})
-    request_object = requests.post(request_ref, headers=headers, data=data)
-    raise_detailed_error(request_object)
-    return request_object.json()
-
-
-def get_account_info(id_token):
-    request_ref = "https://www.googleapis.com/identitytoolkit/v3/relyingparty/getAccountInfo?key={0}".format(
-        st.secrets['FIREBASE_WEB_API_KEY'])
-    headers = {"content-type": "application/json; charset=UTF-8"}
-    data = json.dumps({"idToken": id_token})
-    request_object = requests.post(request_ref, headers=headers, data=data)
-    raise_detailed_error(request_object)
-    return request_object.json()
-
-
-def send_email_verification(id_token):
-    request_ref = "https://www.googleapis.com/identitytoolkit/v3/relyingparty/getOobConfirmationCode?key={0}".format(
-        st.secrets['FIREBASE_WEB_API_KEY'])
-    headers = {"content-type": "application/json; charset=UTF-8"}
-    data = json.dumps({"requestType": "VERIFY_EMAIL", "idToken": id_token})
-    request_object = requests.post(request_ref, headers=headers, data=data)
-    raise_detailed_error(request_object)
-    return request_object.json()
-
-
-def send_password_reset_email(email):
-    request_ref = "https://www.googleapis.com/identitytoolkit/v3/relyingparty/getOobConfirmationCode?key={0}".format(
-        st.secrets['FIREBASE_WEB_API_KEY'])
-    headers = {"content-type": "application/json; charset=UTF-8"}
-    data = json.dumps({"requestType": "PASSWORD_RESET", "email": email})
-    request_object = requests.post(request_ref, headers=headers, data=data)
-    raise_detailed_error(request_object)
-    return request_object.json()
+pb_auth = pyrebase.initialize_app(
+    json.load(open("./configs/firebase-pyrebase.json"))
+).auth()
 
 
 def create_user_with_email_and_password(email, password):
@@ -48,16 +13,6 @@ def create_user_with_email_and_password(email, password):
         st.secrets['FIREBASE_WEB_API_KEY'])
     headers = {"content-type": "application/json; charset=UTF-8"}
     data = json.dumps({"email": email, "password": password, "returnSecureToken": True})
-    request_object = requests.post(request_ref, headers=headers, data=data)
-    raise_detailed_error(request_object)
-    return request_object.json()
-
-
-def delete_user_account(id_token):
-    request_ref = "https://www.googleapis.com/identitytoolkit/v3/relyingparty/deleteAccount?key={0}".format(
-        st.secrets['FIREBASE_WEB_API_KEY'])
-    headers = {"content-type": "application/json; charset=UTF-8"}
-    data = json.dumps({"idToken": id_token})
     request_object = requests.post(request_ref, headers=headers, data=data)
     raise_detailed_error(request_object)
     return request_object.json()
@@ -73,14 +28,14 @@ def raise_detailed_error(request_object):
 def sign_in(email: str, password: str) -> None:
     try:
         # Attempt to sign in with email and password
-        id_token = sign_in_with_email_and_password(email, password)['idToken']
+        id_token = pb_auth.sign_in_with_email_and_password(email, password)['idToken']
 
         # Get account information
-        user_info = get_account_info(id_token)["users"][0]
+        user_info = pb_auth.get_account_info(id_token)["users"][0]
 
         # If email is not verified, send verification email and do not sign in
         if not user_info["emailVerified"]:
-            send_email_verification(id_token)
+            pb_auth.send_email_verification(id_token)
             st.session_state.auth_warning = 'Check your email to verify your account'
 
         # Save user info to session state and rerun
@@ -106,7 +61,7 @@ def create_account(email: str, password: str) -> None:
         id_token = create_user_with_email_and_password(email, password)['idToken']
 
         # Create account and send email verification
-        send_email_verification(id_token)
+        pb_auth.send_email_verification(id_token)
         st.session_state.auth_success = 'Check your inbox to verify your email'
 
     except requests.exceptions.HTTPError as error:
@@ -126,7 +81,7 @@ def create_account(email: str, password: str) -> None:
 
 def reset_password(email: str) -> None:
     try:
-        send_password_reset_email(email)
+        pb_auth.send_password_reset_email(email)
         st.session_state.auth_success = 'Password reset link sent to your email'
 
     except requests.exceptions.HTTPError as error:
@@ -148,10 +103,10 @@ def sign_out() -> None:
 def delete_account(password: str) -> None:
     try:
         # Confirm email and password by signing in (and save id_token)
-        id_token = sign_in_with_email_and_password(st.session_state.user_info['email'], password)['idToken']
+        id_token = pb_auth.sign_in_with_email_and_password(st.session_state.user_info['email'], password)['idToken']
 
         # Attempt to delete account
-        delete_user_account(id_token)
+        pb_auth.delete_user_account(id_token)
         st.session_state.clear()
         st.session_state.auth_success = 'You have successfully deleted your account'
 

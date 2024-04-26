@@ -8,11 +8,15 @@ from internal.user.schemas import UserCreateDto, UserUpdateDto, UserDto
 
 def get_user(db: Session, user_id: int):
     user = db.query(User).filter(User.id == user_id).first()
+    if not user:
+        raise HTTPException(status_code=404, detail=f"User with id={user_id} is not found")
     return user
 
 
 def get_user_by_email(db: Session, email: str):
     user = db.query(User).filter(User.email == email).first()
+    if not user:
+        raise HTTPException(status_code=404, detail=f"User with email={email} is not found")
     return user
 
 
@@ -22,6 +26,8 @@ def get_users(db: Session):
 
 def update_user(db: Session, user_update_dto: UserUpdateDto):
     user = get_user(db, user_id=user_update_dto.id)
+    if not user:
+        raise HTTPException(status_code=404, detail=f"User with id={user.id} is not found")
     user.email = user_update_dto.email
     user.name = user_update_dto.name
     db.refresh(user)

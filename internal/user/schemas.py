@@ -1,6 +1,6 @@
 from pydantic import BaseModel
 
-from internal.item.schemas import Item
+from internal.item.schemas import ItemDto
 
 
 class UserCreateDto(BaseModel):
@@ -18,7 +18,7 @@ class UserDto(BaseModel):
     id: int
     email: str
     name: str
-    items: list[Item] = []
+    items: list[ItemDto] = []
 
     class Config:
         orm_mode = True

@@ -18,6 +18,8 @@ def get_db():
 
 @router.post("/", response_model=UserDto)
 def create_user(user: UserCreateDto, db: Session = Depends(get_db)):
+    if service.get_user_by_email(db, user.email):
+        raise HTTPException(status_code=400, detail=f"User with email={user.email} is already exists")
     return service.create_user(db, user)
 
 
@@ -28,23 +30,14 @@ def get_users(db: Session = Depends(get_db)):
 
 @router.get("/{user_id}", response_model=UserDto)
 def get_user(user_id: int, db: Session = Depends(get_db)):
-    user = service.get_user(db, user_id=user_id)
-    if not user:
-        raise HTTPException(status_code=404, detail=f"User with id={user_id} is not found")
-    return user
+    return service.get_user(db, user_id=user_id)
 
 
 @router.get("/by-email/{email}", response_model=UserDto)
 def get_user(email: str, db: Session = Depends(get_db)):
-    user = service.get_user_by_email(db, email=email)
-    if not user:
-        raise HTTPException(status_code=404, detail=f"User with email={email} is not found")
-    return user
+    return service.get_user_by_email(db, email=email)
 
 
 @router.put("/", response_model=UserDto)
 def update_user(user: UserUpdateDto, db: Session = Depends(get_db)):
-    user = service.update_user(db, user_update_dto=user)
-    if not user:
-        raise HTTPException(status_code=404, detail=f"User with id={user.id} is not found")
-    return user
+    return service.update_user(db, user_update_dto=user)

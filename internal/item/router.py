@@ -1,7 +1,10 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, Depends
+from sqlalchemy.orm import Session
 
 from internal.data.database import SessionLocal
+from internal.item import service
 from internal.item.schemas import *
+from internal.user.service import get_user
 
 router = APIRouter(prefix="/item", tags=["Item operations"])
 
@@ -14,35 +17,33 @@ def get_db():
         db.close()
 
 
-@router.post("/", response_model=Item)
-def create_item(item: ItemCreate):
-    pass
-
-@router.get("/", response_model=list[Item])
-def get_items():
-    return [Item(**{
-        "id": 5,
-        "owner_id": 5,
-        "title": "TITLE",
-        "description": "DESCRIPTION"
-    })]
+@router.post("/", response_model=ItemDto)
+def create_item(item: ItemCreateDto, db: Session = Depends(get_db)):
+    get_user(db, item.owner_id)
+    return service.create_item(db, item)
 
 
-@router.get("/{item_id}", response_model=Item)
-def get_item(item_id: int):
-    return Item(**{
-        "id": item_id,
-        "owner_id": 5,
-        "title": "TITLE",
-        "description": "DESCRIPTION"
-    })
+@router.get("/", response_model=list[ItemDto])
+def get_items(db: Session = Depends(get_db)):
+    return service.get_items(db)
 
 
-@router.put("/", response_model=Item)
-def update_item(item: ItemCreate):
-    return Item(**{
-        "id": 5,
-        "owner_id": 5,
-        "title": "TITLE",
-        "description": "DESCRIPTION"
-    })
+@router.get("/user/{user_id}", response_model=list[ItemDto])
+def get_items_user(user_id: int, db: Session = Depends(get_db)):
+    return service.get_items_by_user(db, user_id)
+
+
+@router.get("/{item_id}", response_model=ItemDto)
+def get_item(item_id: int, db: Session = Depends(get_db)):
+    return service.get_item(db, item_id)
+
+
+@router.put("/", response_model=ItemDto)
+def update_item(item: ItemUpdateDto, db: Session = Depends(get_db)):
+    return service.update_item(db, item)
+
+
+@router.delete("/{item_id}", response_model=bool)
+def delete_item(item_id, db: Session = Depends(get_db)):
+    return service.delete_item(db, item_id)
+

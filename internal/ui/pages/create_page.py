@@ -1,6 +1,7 @@
 import streamlit as st
 from internal.ui import manager, menu
 
+
 #     id = Column(Integer, primary_key=True)
 #     title = Column(String, index=True)
 #     description = Column(String)
@@ -29,7 +30,7 @@ def display_add_form():
 
 def display():
     menu.display()
-    if "user_info" not in st.session_state:  # TODO: inverse logic
+    if "user_info" in st.session_state:
         display_add_form()
     else:
         st.warning('You should be logged in to create add.', icon="⚠️")

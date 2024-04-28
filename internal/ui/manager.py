@@ -49,3 +49,41 @@ def create_item(title, price, description, image):
     except Exception as error:
         print(error)
         st.session_state.create_warning = "Error: Please try again later"
+
+
+def send_image(image):
+    image_id = str(uuid.uuid4())
+    storage.save_image(image_id, image)
+    print(image_id)
+
+
+def get_image_full_url(item_id):
+    full_url = storage.get_image(item_id)
+    return full_url
+
+
+def get_user_info_by_id(user_id):
+    request_ref = f"http://0.0.0.0:8001/api/user/{user_id}"
+    return get_request_by_url(request_ref)
+
+
+def get_user_id_by_email(email):
+    request_ref = f"http://0.0.0.0:8001/api/user/by-email/{email}"
+    return get_request_by_url(request_ref)
+
+
+def get_items():
+    request_ref = "http://0.0.0.0:8001/api/item/"
+    return get_request_by_url(request_ref)
+
+
+def get_request_by_url(url):
+    try:
+        response = requests.get(url)
+        if response.status_code == 200:
+            data = response.json()
+            return data
+        else:
+            return None
+    except requests.exceptions.RequestException as e:
+        return None

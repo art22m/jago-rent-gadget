@@ -1,5 +1,6 @@
-import menu
 import streamlit as st
+
+import menu
 from pages import welcome_page
 
 

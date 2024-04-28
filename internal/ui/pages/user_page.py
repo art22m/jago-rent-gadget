@@ -1,5 +1,4 @@
 import streamlit as st
-
 from internal.ui import auth, menu
 
 

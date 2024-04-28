@@ -1,12 +1,11 @@
 import streamlit as st
-
 from internal.ui import menu
 
 sample_of_message = [
     {
         "title": "Пылесос 3000Т",
         "description": "пылесос очень крутой",
-        "photo": "https://www.shutterstock.com/shutterstock/photos/2151833739/display_1500/stock-photo-portrait-of-a-young-latin-woman-with-pleasant-smile-and-crossed-arms-isolated-on-grey-wall-with-2151833739.jpg",
+        "photo": "https://avatars.dzeninfra.ru/get-zen_doc/9736637/pub_64a2847366951d660ceeb11f_64a288965134d54eb82e1523/scale_1200",
         "contacts": "some@email.ru",
         "money": "1000руб/ч",
     },

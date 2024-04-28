@@ -3,12 +3,12 @@ import boto3
 
 class Storage:
     def __init__(
-        self,
-        service_name: str,
-        endpoint_url: str,
-        access_key: str,
-        secret: str,
-        bucket: str,
+            self,
+            endpoint_url: str,
+            access_key: str,
+            secret: str,
+            bucket: str,
+            service_name: str = "s3",
     ):
         assert access_key is not None
         assert secret is not None
@@ -39,7 +39,6 @@ class Storage:
 
 def create_key(key):
     return f"images/{key}"
-
 
 # if __name__ == "__main__":
 #     d = "123"

@@ -1,5 +1,6 @@
 import json
 
+import internal.ui.utils as utils
 import pyrebase
 import requests
 import streamlit as st
@@ -14,15 +15,8 @@ def create_user_with_email_and_password(email, username, password):
     headers = {"content-type": "application/json; charset=UTF-8"}
     data = json.dumps({"email": email, "name": username, "password": password})
     request_object = requests.post(request_ref, headers=headers, data=data)
-    raise_detailed_error(request_object)
+    utils.raise_detailed_error(request_object)
     return request_object.json()
-
-
-def raise_detailed_error(request_object):
-    try:
-        request_object.raise_for_status()
-    except requests.exceptions.HTTPError as error:
-        raise requests.exceptions.HTTPError(error, request_object.text)
 
 
 def sign_in(email: str, password: str) -> None:
@@ -35,6 +29,7 @@ def sign_in(email: str, password: str) -> None:
         # st.session_state.auth_warning = "Check your email to verify your account"
         # else:
         st.session_state.user_info = user_info
+        st.session_state.user_token = id_token
         st.switch_page("pages/user_page.py")
         st.experimental_rerun()
 

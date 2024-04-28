@@ -45,7 +45,7 @@ def display_auth_page():
     elif selector == "No" and create_account_button():
         with auth_notification, st.spinner("Creating account"):
             auth.create_account(email, username, password)
-    elif reset_button():
+    elif selector == "I forgot my password" and reset_button():
         with auth_notification, st.spinner("Sending password reset link"):
             auth.reset_password(email)
 

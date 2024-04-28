@@ -30,9 +30,8 @@ def update_user(db: Session, user_update_dto: UserUpdateDto):
         raise HTTPException(status_code=404, detail=f"User with id={user.id} is not found")
     user.email = user_update_dto.email
     user.name = user_update_dto.name
-    db.refresh(user)
     db.commit()
-    return user
+    return get_user(db, user.id)
 
 
 def create_user(db: Session, user: UserCreateDto):

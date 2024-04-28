@@ -29,7 +29,6 @@ def update_item(db: Session, item_update_dto: ItemUpdateDto):
     item.description = item_update_dto.description
     item.price = item_update_dto.price
     item.s3_url = item.s3_url
-    db.refresh(item)
     db.commit()
     return item
 

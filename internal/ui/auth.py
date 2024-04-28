@@ -35,6 +35,7 @@ def sign_in(email: str, password: str) -> None:
         # st.session_state.auth_warning = "Check your email to verify your account"
         # else:
         st.session_state.user_info = user_info
+        st.switch_page("pages/user_page.py")
         st.experimental_rerun()
 
     except requests.exceptions.HTTPError as error:

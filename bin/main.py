@@ -6,7 +6,6 @@ import firebase_admin
 from fastapi import FastAPI
 from firebase_admin import credentials
 
-from internal.user.auth import Auther
 from internal.data.database import engine, Base
 from internal.item.router import router as item_router
 from internal.user.router import router as user_router
@@ -26,10 +25,10 @@ def main():
     cred = credentials.Certificate("./configs/firebase-adminsdk.json")
     firebase_admin.initialize_app(cred)
 
-    auth = Auther(pb_auth)
+    # auth = Auther(pb_auth)
     # user = auth.register("test@mail.ru", "123456")
-    user = auth.sign_in("test@mail.ru", "123456")
-    print(user)
+    # user = auth.sign_in("test@mail.ru", "123456")
+    # print(user)
     #
     # auth.verify(user["idToken"])
     #

@@ -46,4 +46,3 @@ def update_item(item: ItemUpdateDto, db: Session = Depends(get_db)):
 @router.delete("/{item_id}", response_model=bool)
 def delete_item(item_id, db: Session = Depends(get_db)):
     return service.delete_item(db, item_id)
-

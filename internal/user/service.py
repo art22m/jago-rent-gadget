@@ -3,7 +3,7 @@ from sqlalchemy.orm import Session
 
 from internal.user import models
 from internal.user.models import User
-from internal.user.schemas import UserCreateDto, UserUpdateDto, UserDto
+from internal.user.schemas import UserCreateDto, UserUpdateDto
 
 
 def get_user(db: Session, user_id: int):

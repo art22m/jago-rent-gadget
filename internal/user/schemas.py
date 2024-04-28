@@ -5,6 +5,7 @@ from internal.item.schemas import ItemDto
 
 class UserCreateDto(BaseModel):
     email: str
+    password: str
     name: str
 
 

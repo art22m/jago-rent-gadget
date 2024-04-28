@@ -1,9 +1,14 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
-
+import json
+import pyrebase
 from internal.data.database import SessionLocal
 from internal.user import service
 from internal.user.schemas import *
+
+pb_auth = pyrebase.initialize_app(
+    json.load(open("./configs/firebase-pyrebase.json"))
+).auth()
 
 router = APIRouter(prefix="/user", tags=["User operations"])
 
@@ -16,11 +21,19 @@ def get_db():
         db.close()
 
 
-@router.post("/", response_model=UserDto)
+@router.post("/")
 def create_user(user: UserCreateDto, db: Session = Depends(get_db)):
-    if service.get_user_by_email(db, user.email):
-        raise HTTPException(status_code=400, detail=f"User with email={user.email} is already exists")
-    return service.create_user(db, user)
+    try:
+        result = pb_auth.create_user_with_email_and_password(user.email, user.password)
+    except Exception as e:
+        return e
+
+    try:
+        service.create_user(db, user)
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"An internal server error occurred. Try again later." + str(e))
+
+    return result
 
 
 @router.get("/", response_model=list[UserDto])

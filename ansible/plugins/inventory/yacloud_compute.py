@@ -1,11 +1,14 @@
 # https://github.com/rodion-goritskov/yacloud_compute/blob/master/yacloud_compute.py
 # GNU General Public License v3.0+ (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
 
-from __future__ import (absolute_import, division, print_function)
+from __future__ import absolute_import, division, print_function
+
+from ansible.errors import AnsibleError
 from ansible.module_utils._text import to_native
 from ansible.utils.display import Display
-from ansible.plugins.inventory import BaseInventoryPlugin, Constructable, Cacheable
-from ansible.errors import AnsibleError
+
+from ansible.plugins.inventory import (BaseInventoryPlugin, Cacheable,
+                                       Constructable)
 
 __metaclass__ = type
 
@@ -50,13 +53,19 @@ EXAMPLES = '''
 
 try:
     import yandexcloud
-    from yandex.cloud.compute.v1.instance_service_pb2_grpc import InstanceServiceStub
-    from yandex.cloud.compute.v1.instance_service_pb2 import ListInstancesRequest
     from google.protobuf.json_format import MessageToDict
-    from yandex.cloud.resourcemanager.v1.cloud_service_pb2 import ListCloudsRequest
-    from yandex.cloud.resourcemanager.v1.cloud_service_pb2_grpc import CloudServiceStub
-    from yandex.cloud.resourcemanager.v1.folder_service_pb2 import ListFoldersRequest
-    from yandex.cloud.resourcemanager.v1.folder_service_pb2_grpc import FolderServiceStub
+    from yandex.cloud.compute.v1.instance_service_pb2 import \
+        ListInstancesRequest
+    from yandex.cloud.compute.v1.instance_service_pb2_grpc import \
+        InstanceServiceStub
+    from yandex.cloud.resourcemanager.v1.cloud_service_pb2 import \
+        ListCloudsRequest
+    from yandex.cloud.resourcemanager.v1.cloud_service_pb2_grpc import \
+        CloudServiceStub
+    from yandex.cloud.resourcemanager.v1.folder_service_pb2 import \
+        ListFoldersRequest
+    from yandex.cloud.resourcemanager.v1.folder_service_pb2_grpc import \
+        FolderServiceStub
 except ImportError:
     raise AnsibleError(
         'The yacloud dynamic inventory plugin requires yandexcloud')

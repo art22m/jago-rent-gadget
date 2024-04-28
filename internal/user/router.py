@@ -1,7 +1,10 @@
+import json
+
+import pyrebase
+import requests
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
-import json
-import pyrebase
+
 from internal.data.database import SessionLocal
 from internal.user import service
 from internal.user.schemas import *
@@ -25,14 +28,18 @@ def get_db():
 def create_user(user: UserCreateDto, db: Session = Depends(get_db)):
     try:
         result = pb_auth.create_user_with_email_and_password(user.email, user.password)
-    except Exception as e:
-        return e
+    except requests.exceptions.HTTPError as error:
+        err = json.loads(error.args[1])["error"]
+        raise HTTPException(status_code=err["code"], detail=err["message"])
+    except Exception as error:
+        raise internal_error(str(error))
 
     try:
         service.create_user(db, user)
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=f"An internal server error occurred. Try again later." + str(e))
+    except Exception as error:
+        raise internal_error(str(error))
 
+    print("registered", user.email)
     return result
 
 
@@ -54,3 +61,9 @@ def get_user(email: str, db: Session = Depends(get_db)):
 @router.put("/", response_model=UserDto)
 def update_user(user: UserUpdateDto, db: Session = Depends(get_db)):
     return service.update_user(db, user_update_dto=user)
+
+
+# Helpers
+
+def internal_error(message: str):
+    return HTTPException(status_code=500, detail=f"An internal server error occurred. Try again later." + str(message))

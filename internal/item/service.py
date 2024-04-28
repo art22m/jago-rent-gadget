@@ -3,7 +3,7 @@ from sqlalchemy.orm import Session
 
 from internal.item import models
 from internal.item.models import Item
-from internal.item.schemas import ItemUpdateDto, ItemCreateDto
+from internal.item.schemas import ItemCreateDto, ItemUpdateDto
 from internal.user.service import get_user
 
 

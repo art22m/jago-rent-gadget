@@ -1,12 +1,12 @@
 import json
 
-import uvicorn
-import pyrebase
 import firebase_admin
+import pyrebase
+import uvicorn
 from fastapi import FastAPI
 from firebase_admin import credentials
 
-from internal.data.database import engine, Base
+from internal.data.database import Base, engine
 from internal.item.router import router as item_router
 from internal.user.router import router as user_router
 

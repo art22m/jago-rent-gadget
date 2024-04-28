@@ -1,5 +1,6 @@
 import streamlit as st
-import internal.ui.auth as auth
+
+from internal.ui import auth, menu
 
 
 def display_auth_page():
@@ -13,24 +14,35 @@ def display_auth_page():
         )
         auth_form = col2.form(key="Authentication form", clear_on_submit=False)
         email = auth_form.text_input(label="Email")
+        username = (
+            auth_form.text_input(label="Username")
+            if do_you_have_an_account in {"No"}
+            else auth_form.empty()
+        )
         password = (
             auth_form.text_input(label="Password", type="password")
-            if do_you_have_an_account in {"Yes", "No"} else auth_form.empty()
+            if do_you_have_an_account in {"Yes", "No"}
+            else auth_form.empty()
         )
         auth_notification = col2.empty()
 
         if do_you_have_an_account == "Yes" and auth_form.form_submit_button(
-                label="Sign In", use_container_width=True, type="primary"
+            label="Sign In", use_container_width=True, type="primary"
         ):
             with auth_notification, st.spinner("Signing in"):
                 auth.sign_in(email, password)
         elif do_you_have_an_account == "No" and auth_form.form_submit_button(
-                label="Create Account", use_container_width=True, type="primary"
+            label="Create Account", use_container_width=True, type="primary"
         ):
             with auth_notification, st.spinner("Creating account"):
-                auth.create_account(email, password)
-        elif do_you_have_an_account == "I forgot my password" and auth_form.form_submit_button(
-                label="Send Password Reset Email", use_container_width=True, type="primary",
+                auth.create_account(email, username, password)
+        elif (
+            do_you_have_an_account == "I forgot my password"
+            and auth_form.form_submit_button(
+                label="Send Password Reset Email",
+                use_container_width=True,
+                type="primary",
+            )
         ):
             with auth_notification, st.spinner("Sending password reset link"):
                 auth.reset_password(email)
@@ -49,4 +61,9 @@ def display_auth_page():
         st.button(label="Sign Out", on_click=auth.sign_out, type="primary")
 
 
-display_auth_page()
+def display():
+    display_auth_page()
+    menu.display()
+
+
+display()

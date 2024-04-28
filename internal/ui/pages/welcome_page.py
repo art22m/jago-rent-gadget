@@ -6,5 +6,7 @@ def display():
 
     # Welcome message
     st.title("Welcome to RentGadget!")
-    st.write("RentGadget is your one-stop platform for renting all kinds of gadgets, from smartphones to laptops and "
-             "more. Browse through our collection of high-quality gadgets and rent them for your needs.")
+    st.write(
+        "RentGadget is your one-stop platform for renting all kinds of gadgets, from smartphones to laptops and "
+        "more. Browse through our collection of high-quality gadgets and rent them for your needs."
+    )

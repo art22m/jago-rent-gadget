@@ -1,5 +1,6 @@
 import streamlit as st
-import math
+
+from internal.ui import menu
 
 sample_of_message = [
     {
@@ -39,6 +40,7 @@ def display_cards():
 
 def display():
     display_cards()
+    menu.display()
 
 
 display()

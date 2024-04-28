@@ -16,8 +16,8 @@ def unauthenticated_menu():
     st.sidebar.page_link("app.py", label="About")
 
 
-def menu():
+def display():
     if utils.is_authenticated():
         authenticated_menu()
     else:
-        authenticated_menu()
+        unauthenticated_menu()

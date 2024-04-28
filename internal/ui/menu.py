@@ -1,8 +1,5 @@
 import streamlit as st
-
-
-def check_authorization():
-    return 'user_info' in st.session_state
+import utils
 
 
 def authenticated_menu():
@@ -20,7 +17,7 @@ def unauthenticated_menu():
 
 
 def menu():
-    if not check_authorization():
-        unauthenticated_menu()
-        return
-    authenticated_menu()
+    if utils.is_authenticated():
+        authenticated_menu()
+    else:
+        authenticated_menu()

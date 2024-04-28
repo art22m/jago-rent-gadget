@@ -22,26 +22,26 @@ def display_auth_page():
 
         # Sign In
         if do_you_have_an_account == "Yes" and auth_form.form_submit_button(
-            label="Sign In", use_container_width=True, type="primary"
+                label="Sign In", use_container_width=True, type="primary"
         ):
             with auth_notification, st.spinner("Signing in"):
                 auth.sign_in(email, password)
 
         # Create Account
         elif do_you_have_an_account == "No" and auth_form.form_submit_button(
-            label="Create Account", use_container_width=True, type="primary"
+                label="Create Account", use_container_width=True, type="primary"
         ):
             with auth_notification, st.spinner("Creating account"):
                 auth.create_account(email, password)
 
         # Password Reset
         elif (
-            do_you_have_an_account == "I forgot my password"
-            and auth_form.form_submit_button(
-                label="Send Password Reset Email",
-                use_container_width=True,
-                type="primary",
-            )
+                do_you_have_an_account == "I forgot my password"
+                and auth_form.form_submit_button(
+            label="Send Password Reset Email",
+            use_container_width=True,
+            type="primary",
+        )
         ):
             with auth_notification, st.spinner("Sending password reset link"):
                 auth.reset_password(email)

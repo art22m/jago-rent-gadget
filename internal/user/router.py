@@ -5,7 +5,7 @@ import requests
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 
-from internal.data.database import SessionLocal
+from internal.data.database import SessionLocal, get_db
 from internal.user import service
 from internal.user.schemas import *
 
@@ -15,13 +15,6 @@ pb_auth = pyrebase.initialize_app(
 
 router = APIRouter(prefix="/user", tags=["User operations"])
 
-
-def get_db():
-    db = SessionLocal()
-    try:
-        yield db
-    finally:
-        db.close()
 
 
 @router.post("/")

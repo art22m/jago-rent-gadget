@@ -1,21 +1,12 @@
 from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
 
-from internal.data.database import SessionLocal
+from internal.data.database import SessionLocal, get_db
 from internal.item import service
 from internal.item.schemas import *
 from internal.user.service import get_user
 
 router = APIRouter(prefix="/item", tags=["Item operations"])
-
-
-def get_db():
-    db = SessionLocal()
-    try:
-        yield db
-    finally:
-        db.close()
-
 
 @router.post("/", response_model=ItemDto)
 def create_item(item: ItemCreateDto, db: Session = Depends(get_db)):

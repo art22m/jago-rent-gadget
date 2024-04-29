@@ -2,15 +2,11 @@ import streamlit as st
 
 from internal.ui import manager, menu
 
-#     id = Column(Integer, primary_key=True)
-#     title = Column(String, index=True)
-#     description = Column(String)
-#     s3_url = Column(String)
-#     price = Column(Integer)
-#     owner_id = Column(Integer, ForeignKey("users.id"))
 
 def display_add_form():
     with st.form(key="item_form"):
+        col1, col2, col3 = st.columns([1, 2, 1])
+
         title = st.text_input(label="Title*")
         price = st.text_input(label="Price*")
         description = st.text_area(label="Description")
@@ -18,14 +14,22 @@ def display_add_form():
 
         st.markdown("**required*")
 
+        create_notification = col2.empty()
         submit_button = st.form_submit_button(label="Create")
         if submit_button:
             if not title or not price or not picture:
                 st.warning("Ensure all mandatory fields are filled.")
                 st.stop()
             else:
-                manager.create_item(title, price, description, picture)
-                # st.success("Advertisement successfully created!")
+                with create_notification, st.spinner("Creating advertisement"):
+                    manager.create_item(title, price, description, picture)
+
+                if "create_success" in st.session_state:
+                    create_notification.success(st.session_state.create_success)
+                    del st.session_state.create_success
+                elif "create_warning" in st.session_state:
+                    create_notification.warning(st.session_state.create_warning)
+                    del st.session_state.create_warning
 
 
 def display():

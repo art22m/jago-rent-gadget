@@ -42,14 +42,12 @@ def create_item(title, price, description, image):
     request_object = requests.post(request_ref, headers=headers, data=data)
     try:
         utils.raise_detailed_error(request_object)
-        st.success("Added")
         # st.experimental_rerun()
+        st.session_state.create_success = "Advertisement successfully created!"
     except requests.exceptions.HTTPError as error:
-        # error_message = json.loads(error.args[1])["detail"]
-        st.session_state.create_warning = str(error)
+        st.session_state.create_warning = str(json.loads(error.args[1])["detail"])
     except Exception as error:
-        print(error)
-        st.session_state.create_warning = "Error: Please try again later"
+        st.session_state.create_warning = "Error: Please try again later " + str(error)
 
 
 def send_image(image):

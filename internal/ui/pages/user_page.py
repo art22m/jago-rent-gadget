@@ -1,6 +1,5 @@
 import streamlit as st
-import time
-from internal.ui import auth, menu, manager
+from internal.ui import auth, menu
 
 
 def display_user_info():
@@ -11,6 +10,7 @@ def display_user_info():
         st.write(f"Email: {st.session_state.user_info['email']}")
     st.header("Sign out:")
     st.button(label="Sign Out", on_click=auth.sign_out, type="primary")
+
 
 def display():
     if "user_info" in st.session_state:

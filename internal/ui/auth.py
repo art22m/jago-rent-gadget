@@ -15,7 +15,7 @@ def create_user_with_email_and_password(email, username, password):
     request_ref = "http://0.0.0.0:8001/api/user"
     headers = {"content-type": "application/json; charset=UTF-8"}
     data = json.dumps({"email": email, "name": username, "password": password})
-    request_object = requests.post(request_ref, headers=headers, data=data)
+    request_object = requests.post(request_ref, headers=headers, data=data, timeout=10)
     utils.raise_detailed_error(request_object)
     return request_object.json()
 
@@ -24,7 +24,7 @@ def signin_with_email_and_password(email, password):
     request_ref = "http://0.0.0.0:8001/api/user/signin"
     headers = {"content-type": "application/json; charset=UTF-8"}
     data = json.dumps({"email": email, "password": password})
-    request_object = requests.get(request_ref, headers=headers, data=data)
+    request_object = requests.get(request_ref, headers=headers, data=data, timeout=10)
     utils.raise_detailed_error(request_object)
     return request_object.json()
 

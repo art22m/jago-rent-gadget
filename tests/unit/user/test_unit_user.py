@@ -17,15 +17,19 @@ class UserTests(unittest.TestCase):
         self.mock = Mock()
 
     def test_create_user(self):
-        self.mock.create_user_with_email_and_password.return_value = {"sessionId": TEST_SESSION}
-        user = UserCreateDto(**{
-            "email": TEST_EMAIL,
-            "password": TEST_PASSWORD,
-            "name": TEST_NAME
-        })
+        self.mock.create_user_with_email_and_password.return_value = {
+            "sessionId": TEST_SESSION
+        }
+        user = UserCreateDto(
+            **{
+                "email": TEST_EMAIL,
+                "password": TEST_PASSWORD,
+                "name": TEST_NAME,
+            }
+        )
         user = service.create_user(self.mock, self.mock, user)
-        assert user['sessionId'] == TEST_SESSION
-        assert user['name'] == TEST_NAME
+        assert user["sessionId"] == TEST_SESSION
+        assert user["name"] == TEST_NAME
 
     def test_create_user__firebase_error(self):
         self.mock.create_user_with_email_and_password.return_value.side_effect = requests.exceptions.HTTPError(

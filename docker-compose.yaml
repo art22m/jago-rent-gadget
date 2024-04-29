@@ -12,7 +12,7 @@ services:
       - PROJECTID=${PROJECTID}
       - TOKENURI=${TOKENURI}
       - TYPE=${TYPE}
-      - APIKE=${APIKEY}
+      - APIKEY=${APIKEY}
       - AUTHDOMAIN=${AUTHDOMAIN}
       - ACCESSKEY=${ACCESSKEY}
       - BUCKET=${BUCKET}
@@ -33,7 +33,7 @@ services:
       - PROJECTID=${PROJECTID}
       - TOKENURI=${TOKENURI}
       - TYPE=${TYPE}
-      - APIKE=${APIKEY}
+      - APIKEY=${APIKEY}
       - AUTHDOMAIN=${AUTHDOMAIN}
       - ACCESSKEY=${ACCESSKEY}
       - BUCKET=${BUCKET}

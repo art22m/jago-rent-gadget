@@ -39,7 +39,8 @@ def create_item(title, price, description, image):
         "Authorization": st.session_state.user_info["idToken"],
     }
 
-    request_object = requests.post(request_ref, headers=headers, data=data, timeout=10)
+    request_object = requests.post(request_ref, headers=headers,
+                                   data=data, timeout=10)
     try:
         utils.raise_detailed_error(request_object)
         st.session_state.create_success = "Advertisement successfully created!"

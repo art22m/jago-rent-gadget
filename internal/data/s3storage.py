@@ -1,17 +1,18 @@
 import boto3
+from internal.exceptions import s3_exception
 
 
 class Storage:
     def __init__(
-        self,
-        endpoint_url: str,
-        access_key: str,
-        secret: str,
-        bucket: str,
-        service_name: str = "s3",
+            self,
+            endpoint_url: str,
+            access_key: str,
+            secret: str,
+            bucket: str,
+            service_name: str = "s3",
     ):
-        assert access_key is not None
-        assert secret is not None
+        if access_key is None or secret is None:
+            raise s3_exception.S3CredentialsError()
 
         session = boto3.session.Session(
             aws_access_key_id=access_key,

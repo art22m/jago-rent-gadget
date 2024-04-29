@@ -10,7 +10,19 @@ env:
   PYTHON_VERSION: 3.11
   POETRY_VERSION: 1.7.1
   FLAKE_CC_MAX_THRESHOLD: 10
-  ENV_SECRET: ${{ secrets.ENV_SECRETS }}
+  CLIENTEMAIL: ${{ secrets.CLIENTEMAIL }}
+  CLIENTID: ${{ secrets.CLIENTID }}
+  PRIVATEKEY: ${{ secrets.PRIVATEKEY }}
+  PRIVATEKEYID: ${{ secrets.PRIVATEKEYID }}
+  PROJECTID: ${{ secrets.PROJECTID }}
+  TOKENURI: ${{ secrets.TOKENURI }}
+  TYPE: ${{ secrets.TYPE }}
+  APIKEY: ${{ secrets.APIKEY }}
+  AUTHDOMAIN: ${{ secrets.AUTHDOMAIN }}
+  ACCESSKEY: ${{ secrets.ACCESSKEY }}
+  BUCKET: ${{ secrets.BUCKET }}
+  ENDPOINT: ${{ secrets.ENDPOINT }}
+  SECRET: ${{ secrets.SECRET }}
 
 jobs:
   lint-complexity:

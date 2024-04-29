@@ -30,7 +30,7 @@ def update_item(db: Session, item_update_dto: ItemUpdateDto):
     item.title = item_update_dto.title
     item.description = item_update_dto.description
     item.price = item_update_dto.price
-    item.s3_url = item.s3_url
+    item.s3_url = item_update_dto.s3_url
     db.commit()
     return item
 
@@ -42,14 +42,14 @@ def delete_item(db: Session, item_id: int):
 
 
 def create_item(db: Session, item_create_dto: ItemCreateDto):
-    db_user = models.Item(
+    db_item = models.Item(
         title=item_create_dto.title,
         description=item_create_dto.description,
         s3_url=item_create_dto.s3_url,
         price=item_create_dto.price,
         owner_id=item_create_dto.owner_id,
     )
-    db.add(db_user)
+    db.add(db_item)
     db.commit()
-    db.refresh(db_user)
-    return db_user
+    db.refresh(db_item)
+    return db_item

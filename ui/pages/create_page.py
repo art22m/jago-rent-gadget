@@ -10,7 +10,11 @@ def display_add_form():
         title = st.text_input(label="Title*")
         price = st.text_input(label="Price*")
         description = st.text_area(label="Description")
-        picture = st.file_uploader(label="Upload the picture*")
+        picture = st.file_uploader(
+            label="Upload the picture*",
+            type=['png', 'jpg', 'jpeg', 'gif', 'heic'],
+            accept_multiple_files=False,
+        )
 
         st.markdown("**required*")
 

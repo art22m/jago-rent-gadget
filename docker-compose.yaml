@@ -4,6 +4,20 @@ services:
   backend:
     image: iskanred/jago_rebt_backend:1.0.0
     container_name: backend
+    environment:
+      - CLIENTEMAIL=${CLIENTEMAIL}
+      - CLIENTID=${CLIENTID}
+      - PRIVATEKEY=${PRIVATEKEY}
+      - PRIVATEKEYID=${PRIVATEKEYID}
+      - PROJECTID=${PROJECTID}
+      - TOKENURI=${TOKENURI}
+      - TYPE=${TYPE}
+      - APIKE=${APIKEY}
+      - AUTHDOMAIN=${AUTHDOMAIN}
+      - ACCESSKEY=${ACCESSKEY}
+      - BUCKET=${BUCKET}
+      - ENDPOINT=${ENDPOINT}
+      - SECRET=${SECRET}
     ports:
       - "8001:8001"
     volumes:
@@ -11,5 +25,19 @@ services:
   frontend:
     image: iskanred/jago_rebt_frontend:1.0.0
     container_name: frontend
+    environment:
+      - CLIENTEMAIL=${CLIENTEMAIL}
+      - CLIENTID=${CLIENTID}
+      - PRIVATEKEY=${PRIVATEKEY}
+      - PRIVATEKEYID=${PRIVATEKEYID}
+      - PROJECTID=${PROJECTID}
+      - TOKENURI=${TOKENURI}
+      - TYPE=${TYPE}
+      - APIKE=${APIKEY}
+      - AUTHDOMAIN=${AUTHDOMAIN}
+      - ACCESSKEY=${ACCESSKEY}
+      - BUCKET=${BUCKET}
+      - ENDPOINT=${ENDPOINT}
+      - SECRET=${SECRET}
     ports:
       - "8501:8501"

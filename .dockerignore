@@ -1,3 +1,4 @@
+ansible/
 .github
 .pytest_cache/
 reports/
@@ -6,6 +7,6 @@ tests/
 setenv.bash
 Dockerfile*
 Makefile
-*.md
 *.pdf
 .*ignore
+docker-compose.yaml

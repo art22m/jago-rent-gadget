@@ -19,7 +19,6 @@ COPY . /app
 
 # Install dependencies
 RUN poetry install
-RUN chmod +x ./bin/main.py
 
 # Run your app
-CMD [ "poetry", "run", "bin/main.py"]
+CMD [ "poetry", "run", "python", "bin/main.py"]

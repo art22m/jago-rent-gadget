@@ -1,16 +1,20 @@
 from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
 
-from internal.data.database import SessionLocal, get_db
-from internal.item import service
-from internal.item.schemas import *
-from internal.user.service import get_user
 from internal import utils
+from internal.data.database import get_db
+from internal.item import service
+from internal.item.schemas import ItemDto, ItemUpdateDto, ItemCreateDto
+from internal.user.service import get_user
 
 router = APIRouter(prefix="/item", tags=["Item operations"])
 
 
-@router.post("/", dependencies=[Depends(utils.validate_firebase)], response_model=ItemDto)
+@router.post(
+    "/",
+    dependencies=[Depends(utils.validate_firebase)],
+    response_model=ItemDto,
+)
 def create_item(item: ItemCreateDto, db: Session = Depends(get_db)):
     get_user(db, item.owner_id)
     return service.create_item(db, item)
@@ -31,11 +35,19 @@ def get_item(item_id: int, db: Session = Depends(get_db)):
     return service.get_item(db, item_id)
 
 
-@router.put("/", dependencies=[Depends(utils.validate_firebase)], response_model=ItemDto)
+@router.put(
+    "/",
+    dependencies=[Depends(utils.validate_firebase)],
+    response_model=ItemDto,
+)
 def update_item(item: ItemUpdateDto, db: Session = Depends(get_db)):
     return service.update_item(db, item)
 
 
-@router.delete("/{item_id}", dependencies=[Depends(utils.validate_firebase)], response_model=bool)
+@router.delete(
+    "/{item_id}",
+    dependencies=[Depends(utils.validate_firebase)],
+    response_model=bool,
+)
 def delete_item(item_id, db: Session = Depends(get_db)):
     return service.delete_item(db, item_id)

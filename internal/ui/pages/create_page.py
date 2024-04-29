@@ -21,14 +21,20 @@ def display_add_form():
                 st.warning("Ensure all mandatory fields are filled.")
                 st.stop()
             else:
-                with create_notification, st.spinner("Creating advertisement..."):
+                with create_notification, st.spinner(
+                    "Creating advertisement..."
+                ):
                     manager.create_item(title, price, description, picture)
 
                 if "create_success" in st.session_state:
-                    create_notification.success(st.session_state.create_success)
+                    create_notification.success(
+                        st.session_state.create_success
+                    )
                     del st.session_state.create_success
                 elif "create_warning" in st.session_state:
-                    create_notification.warning(st.session_state.create_warning)
+                    create_notification.warning(
+                        st.session_state.create_warning
+                    )
                     del st.session_state.create_warning
 
 
@@ -37,7 +43,7 @@ def display():
     if "user_info" in st.session_state:
         display_add_form()
     else:
-        st.warning('You should be logged in to create add.', icon="⚠️")
+        st.warning("You should be logged in to create add.", icon="⚠️")
         go_to_log_in = st.button("Go to log in page ↗️")
         if go_to_log_in:
             st.switch_page("pages/auth_page.py")

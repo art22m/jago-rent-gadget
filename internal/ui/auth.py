@@ -31,11 +31,6 @@ def signin_with_email_and_password(email, password):
 
 def sign_in(email: str, password: str) -> None:
     try:
-        # if not user_info["emailVerified"]:
-        # pb_auth.send_email_verification(id_token)
-        # st.session_state.auth_warning = "Check your email to verify your account"
-        # else:
-
         user = signin_with_email_and_password(email, password)
         st.session_state.user_info = user
         st.switch_page("pages/user_page.py")
@@ -45,17 +40,13 @@ def sign_in(email: str, password: str) -> None:
         st.session_state.auth_warning = json.loads(error.args[1])["detail"]
 
     except Exception as error:
-        st.session_state.auth_warning = "Error: Please try again later" + str(error)
+        st.session_state.auth_warning = "Error: Please try again later" + str(
+            error
+        )
 
 
 def create_account(email: str, username: str, password: str) -> None:
     try:
-        # id_token = create_user_with_email_and_password(email, username, password)[
-        #     "idToken"
-        # ]
-        # pb_auth.send_email_verification(id_token)
-        # st.session_state.auth_success = "Check your inbox to verify your email"
-
         user = create_user_with_email_and_password(email, username, password)
         st.session_state.user_info = user
         st.switch_page("pages/user_page.py")
@@ -65,19 +56,25 @@ def create_account(email: str, username: str, password: str) -> None:
         st.session_state.auth_warning = json.loads(error.args[1])["detail"]
 
     except Exception as error:
-        st.session_state.auth_warning = "Error: Please try again later" + str(error)
+        st.session_state.auth_warning = "Error: Please try again later" + str(
+            error
+        )
 
 
 def reset_password(email: str) -> None:
     try:
         pb_auth.send_password_reset_email(email)
-        st.session_state.auth_success = "Password reset link sent to your email"
+        st.session_state.auth_success = (
+            "Password reset link sent to your email"
+        )
 
     except requests.exceptions.HTTPError as error:
         error_message = json.loads(error.args[1])["error"]["message"]
         st.session_state.auth_warning = error_message
     except Exception as error:
-        st.session_state.auth_warning = "Error: Please try again later" + str(error)
+        st.session_state.auth_warning = "Error: Please try again later" + str(
+            error
+        )
 
 
 def sign_out() -> None:
@@ -93,7 +90,9 @@ def delete_account(password: str) -> None:
 
         pb_auth.delete_user_account(id_token)
         st.session_state.clear()
-        st.session_state.auth_success = "You have successfully deleted your account"
+        st.session_state.auth_success = (
+            "You have successfully deleted your account"
+        )
 
     except requests.exceptions.HTTPError as error:
         error_message = json.loads(error.args[1])["error"]["message"]

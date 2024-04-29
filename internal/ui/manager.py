@@ -44,9 +44,13 @@ def create_item(title, price, description, image):
         utils.raise_detailed_error(request_object)
         st.session_state.create_success = "Advertisement successfully created!"
     except requests.exceptions.HTTPError as error:
-        st.session_state.create_warning = str(json.loads(error.args[1])["detail"])
+        st.session_state.create_warning = str(
+            json.loads(error.args[1])["detail"]
+        )
     except Exception as error:
-        st.session_state.create_warning = "Error: Please try again later " + str(error)
+        st.session_state.create_warning = (
+            "Error: Please try again later " + str(error)
+        )
 
 
 def send_image(image):
@@ -83,7 +87,7 @@ def get_request_by_url(url):
             return data
         else:
             return None
-    except requests.exceptions.RequestException as e:
+    except requests.exceptions.RequestException:
         return None
 
 
@@ -100,5 +104,5 @@ def delete_item(item_id):
             return data
         else:
             return None
-    except requests.exceptions.RequestException as e:
+    except requests.exceptions.RequestException:
         return None

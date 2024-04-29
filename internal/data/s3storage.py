@@ -3,12 +3,12 @@ import boto3
 
 class Storage:
     def __init__(
-            self,
-            endpoint_url: str,
-            access_key: str,
-            secret: str,
-            bucket: str,
-            service_name: str = "s3",
+        self,
+        endpoint_url: str,
+        access_key: str,
+        secret: str,
+        bucket: str,
+        service_name: str = "s3",
     ):
         assert access_key is not None
         assert secret is not None
@@ -33,7 +33,9 @@ class Storage:
 
     def get_image(self, item_id):
         key = create_key(item_id)
-        data = self.client.get_object(Bucket=self.bucket, Key=key)["Body"].read()
+        data = self.client.get_object(Bucket=self.bucket, Key=key)[
+            "Body"
+        ].read()
         return data
 
 

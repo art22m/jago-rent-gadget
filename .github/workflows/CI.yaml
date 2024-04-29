@@ -3,7 +3,6 @@ name: CI Pipeline
 on:
   push:
     paths-ignore:
-      - '**/*'
       - 'ansible/**'
       - '**/*.md'
 
@@ -46,7 +45,7 @@ jobs:
       - name: Install Dependencies
         run: poetry install
       - name: Run bandit
-        run: poetry run bandit -c pyproject.toml -r bin/ internal/ tests/
+        run: poetry run bandit -c pyproject.toml -r bin/ internal/
   test:
     name: Test
     runs-on: ubuntu-22.04

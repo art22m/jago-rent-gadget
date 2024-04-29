@@ -51,6 +51,7 @@ coverage.xml
 .hypothesis/
 .pytest_cache/
 cover/
+reports/
 
 # Translations
 *.mo
@@ -162,7 +163,7 @@ cython_debug/
 
 configs/
 
-### Python Patch ###
+### Python Patch ##*#
 # Poetry local configuration file - https://python-poetry.org/docs/configuration/#local-configuration
 poetry.toml
 
@@ -173,12 +174,7 @@ poetry.toml
 pyrightconfig.json
 
 # Credentials
-firebase-adminsdk.json
-firebase-pyrebase.json
-yandex-s3-creds.json
-
+*env.bash
 *.token
 
 ansible/ansible-env
-
-reports/

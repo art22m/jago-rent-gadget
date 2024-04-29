@@ -3,6 +3,11 @@ POETRY := poetry
 
 FLAKE_CC_MAX_THRESHOLD := 10
 
+.PHONY: update
+update:
+	rm -rf poetry.lock
+	$(POETRY) install
+
 .PHONY: run-frontend
 run-frontend:
 	$(POETRY) run streamlit run ui/app.py

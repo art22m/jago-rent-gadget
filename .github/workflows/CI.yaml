@@ -40,10 +40,10 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: ${{ env.PYTHON_VERSION }}
-#      - uses: abatilo/actions-poetry@v3
-#        with:
-#          poetry-version: ${{ env.POETRY_VERSION }}
-#      - name: Install Dependencies
+      - uses: abatilo/actions-poetry@v3
+        with:
+          poetry-version: ${{ env.POETRY_VERSION }}
+      - name: Install Dependencies
         run: poetry install
       - name: Run bandit
         run: poetry run bandit -c pyproject.toml -r bin/ internal/ tests/

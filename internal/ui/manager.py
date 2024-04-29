@@ -39,7 +39,7 @@ def create_item(title, price, description, image):
         "Authorization": st.session_state.user_info["idToken"],
     }
 
-    request_object = requests.post(request_ref, headers=headers, data=data)
+    request_object = requests.post(request_ref, headers=headers, data=data, timeout=10)
     try:
         utils.raise_detailed_error(request_object)
         st.session_state.create_success = "Advertisement successfully created!"
@@ -81,7 +81,7 @@ def get_items():
 
 def get_request_by_url(url):
     try:
-        response = requests.get(url)
+        response = requests.get(url, timeout=10)
         if response.status_code == 200:
             data = response.json()
             return data
@@ -98,7 +98,7 @@ def delete_item(item_id):
         "Authorization": st.session_state.user_info["idToken"],
     }
     try:
-        response = requests.delete(request_ref, headers=headers)
+        response = requests.delete(request_ref, headers=headers, timeout=10)
         if response.status_code == 200:
             data = response.json()
             return data

@@ -40,6 +40,6 @@ cc:
 	$(POETRY) run flake8 --select=C --max-complexity=$(FLAKE_CC_MAX_THRESHOLD) bin/ internal/ tests/
 
 
-.PHONY: cc
+.PHONY: security
 security:
 	$(POETRY) run bandit -c pyproject.toml -r bin/ internal/ tests/

@@ -22,4 +22,4 @@ class UserDto(BaseModel):
     items: list[ItemDto] = []
 
     class Config:
-        orm_mode = True
+        from_attributes = True

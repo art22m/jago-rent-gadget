@@ -1,4 +1,4 @@
-from tests.e2e.fixtures import generate_random_email
+from tests.e2e.conftest import generate_random_email
 
 
 def test_create_item__happy_path(client):
@@ -29,9 +29,7 @@ def test_create_item__happy_path(client):
     }
     assert create_response.status_code == 200
 
-    get_response_item = client.get(
-        f"api/item/{item_id}"
-    )
+    get_response_item = client.get(f"api/item/{item_id}")
     assert get_response_item.json() == {'description': 'description',
                                         'id': item_id,
                                         'owner_id': 1,
@@ -40,9 +38,7 @@ def test_create_item__happy_path(client):
                                         'title': 'title'}
     assert get_response_item.status_code == 200
 
-    get_response_client = client.get(
-        "api/user"
-    )
+    get_response_client = client.get("api/user")
     assert get_response_client.json() == [{'email': email,
                                            'id': 1,
                                            'items': [{'description': 'description',

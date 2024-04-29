@@ -3,6 +3,7 @@ name: CI Pipeline
 on:
   push:
     paths-ignore:
+      - '**/*'
       - 'ansible/**'
       - '**/*.md'
 
@@ -39,13 +40,13 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: ${{ env.PYTHON_VERSION }}
-      - uses: abatilo/actions-poetry@v3
-        with:
-          poetry-version: ${{ env.POETRY_VERSION }}
-      - name: Install Dependencies
+#      - uses: abatilo/actions-poetry@v3
+#        with:
+#          poetry-version: ${{ env.POETRY_VERSION }}
+#      - name: Install Dependencies
         run: poetry install
       - name: Run bandit
-        run: poetry run bandit -r bin/ internal/ tests/
+        run: poetry run bandit -c pyproject.toml -r bin/ internal/ tests/
   test:
     name: Test
     runs-on: ubuntu-22.04
@@ -63,5 +64,16 @@ jobs:
           poetry-version: ${{ env.POETRY_VERSION }}
       - name: Install Dependencies
         run: poetry install
-      - name: Run pytest
-        run: poetry run pytest
+      - name: Run pytest with coverage
+        run: >
+          poetry run pytest \
+            --junitxml=reports/test-report.xml \
+            --html=reports/report.html \
+            --cov-report=term-missing \
+            --cov=internal \
+            --cov-fail-under=60 tests/
+      - name: Upload test report
+        uses: actions/upload-artifact@v3
+        with:
+          name: test-report
+          path: ./reports/

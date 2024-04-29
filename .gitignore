@@ -172,5 +172,13 @@ poetry.toml
 # LSP config files
 pyrightconfig.json
 
+# Credentials
+firebase-adminsdk.json
+firebase-pyrebase.json
+yandex-s3-creds.json
+
 *.token
+
 ansible/ansible-env
+
+reports/

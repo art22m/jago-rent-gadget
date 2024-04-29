@@ -13,7 +13,18 @@ run-backend:
 
 .PHONY: test
 test:
-	$(POETRY) run pytest
+	$(POETRY) run pytest \
+		--junitxml=reports/test-report.xml \
+		--html=reports/report.html \
+
+.PHONY: cov
+cov:
+	$(POETRY) run pytest \
+		--junitxml=reports/test-report.xml \
+		--html=reports/report.html \
+		--cov-report=term-missing \
+		--cov=internal \
+		--cov-fail-under=60 tests/
 
 .PHONY: lint
 lint:

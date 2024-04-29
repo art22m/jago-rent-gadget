@@ -8,4 +8,5 @@ def override_pb_auth():
     auth.create_user_with_email_and_password.return_value = {
         "sessionId": "as314v"
     }
+    auth.verify_id_token.return_value = "success"
     return auth

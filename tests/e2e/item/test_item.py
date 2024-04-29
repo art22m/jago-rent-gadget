@@ -1,7 +1,11 @@
+from unittest.mock import patch
+
 from tests.e2e.conftest import generate_random_email
 
 
-def test_create_item__happy_path(client):
+@patch('firebase_admin.auth.verify_id_token')
+def test_create_item__happy_path(auth_request, client):
+    auth_request.return_value = "success"
     email = generate_random_email()
     client_id = client.post(
         "api/user",
@@ -17,7 +21,11 @@ def test_create_item__happy_path(client):
             "price": 150,
             "owner_id": client_id,
         },
+        headers={
+            "Authorization": "xGezNUz1yPrIaJXHAV5xQU91uOFa7mdDf3k14CWxn6bBQ8xW2vRiIAknWVT"
+        }
     )
+    assert create_response.status_code == 200
     item_id = create_response.json()["id"]
     assert create_response.json() == {
         "id": item_id,
@@ -27,7 +35,6 @@ def test_create_item__happy_path(client):
         "price": 150,
         "owner_id": client_id,
     }
-    assert create_response.status_code == 200
 
     get_response_item = client.get(f"api/item/{item_id}")
     assert get_response_item.json() == {

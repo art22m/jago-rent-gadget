@@ -71,6 +71,8 @@ jobs:
             --cov-report=term-missing \
             --cov=internal \
             --cov-fail-under=60 tests/
+        env:
+          ENV_SECRET: ${{ secrets.ENV_SECRET }}
       - name: Upload test report
         uses: actions/upload-artifact@v3
         with:

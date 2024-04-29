@@ -60,7 +60,7 @@ def send_image(image):
     print(image_id)
 
 
-def get_image_full_url(item_id):
+def get_image(item_id):
     full_url = storage.get_image(item_id)
     return full_url
 

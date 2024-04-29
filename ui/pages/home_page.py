@@ -8,7 +8,7 @@ def display_item_card(item):
     with item_card_container:
         st.header(item["title"])
         photo = st.container()
-        image_url = manager.get_image_full_url(item["s3_url"])
+        image_url = manager.get_image(item["s3_url"])
         photo.image(image_url)
         info_container = st.container(border=True)
         user_info = manager.get_user_info_by_id(item["owner_id"])

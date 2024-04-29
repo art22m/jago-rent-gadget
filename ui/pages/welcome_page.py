@@ -16,5 +16,5 @@ def display():
         "Browse through our collection of high-quality gadgets and rent them"
         " for your needs."
     )
-    image = manager.get_image_full_url("cbb09b7f-b399-4e6d-9c1e-d486fd951e82")
+    image = manager.get_image("cbb09b7f-b399-4e6d-9c1e-d486fd951e82")
     st.image(image)

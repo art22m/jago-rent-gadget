@@ -10,7 +10,7 @@ def create_item_card(item):
     with item_card_container:
         st.header(item["title"])
         photo = st.container()
-        image_url = manager.get_image_full_url(item["s3_url"])
+        image_url = manager.get_image(item["s3_url"])
         photo.image(image_url)
         info_container = st.container(border=True)
         with info_container:

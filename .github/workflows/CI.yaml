@@ -25,6 +25,15 @@ env:
   SECRET: ${{ secrets.SECRET }}
 
 jobs:
+  show_environment:
+    name: "Show environment variables"
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: "Show environmetn variables"
+        run: |
+          env
+
   lint-complexity:
     name: Lint & Complexity Check
     runs-on: ubuntu-22.04

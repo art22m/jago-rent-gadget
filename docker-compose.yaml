@@ -1,0 +1,15 @@
+version: "3.8"
+
+services:
+  backend:
+    image: iskanred/jago_rebt_backend:1.0.0
+    container_name: backend
+    ports:
+      - "8001:8001"
+    volumes:
+      - "./data:/app/data"
+  frontend:
+    image: iskanred/jago_rebt_frontend:1.0.0
+    container_name: frontend
+    ports:
+      - "8501:8501"

@@ -1,0 +1,11 @@
+.github
+.pytest_cache/
+reports/
+tests/
+*.coverage
+setenv.bash
+Dockerfile*
+Makefile
+*.md
+*.pdf
+.*ignore

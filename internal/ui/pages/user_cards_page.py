@@ -19,7 +19,7 @@ def create_item_card(item):
             if delete_button:
                 status = manager.delete_item(item['id'])
                 if status:
-                    st.success('This is a success message!', icon="✅")
+                    st.success('Successfully deleted', icon="✅")
                     time.sleep(0.4)
                     st.rerun()
                 else:

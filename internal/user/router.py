@@ -14,7 +14,34 @@ router = APIRouter(prefix="/user", tags=["User operations"])
 
 @router.post("/")
 def create_user(user: UserCreateDto, db: Session = Depends(get_db), auth=Depends(pb_auth)):
-    return service.create_user(db, auth, user)
+    try:
+        fb_user = auth.create_user_with_email_and_password(user.email, user.password)
+    except requests.exceptions.HTTPError as error:
+        err = json.loads(error.args[1])["error"]
+        raise HTTPException(status_code=err["code"], detail=err["message"])
+    except Exception as error:
+        raise internal_error(str(error))
+
+    user = service.create_user(db, user)
+    fb_user["id"] = user.id
+    fb_user["name"] = user.name
+    return fb_user
+
+
+@router.get("/signin")
+def signin_user(user: UserSigninDto, db: Session = Depends(get_db), auth=Depends(pb_auth)):
+    try:
+        fb_user = auth.sign_in_with_email_and_password(user.email, user.password)
+    except requests.exceptions.HTTPError as error:
+        err = json.loads(error.args[1])["error"]
+        raise HTTPException(status_code=err["code"], detail=err["message"])
+    except Exception as error:
+        raise internal_error(str(error))
+
+    user = service.get_user_by_email(db, fb_user["email"])
+    fb_user["id"] = user.id
+    fb_user["name"] = user.name
+    return fb_user
 
 
 @router.get("/", response_model=list[UserDto])

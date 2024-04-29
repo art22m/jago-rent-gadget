@@ -9,6 +9,11 @@ class UserCreateDto(BaseModel):
     name: str
 
 
+class UserSigninDto(BaseModel):
+    email: str
+    password: str
+
+
 class UserUpdateDto(BaseModel):
     id: int
     email: str

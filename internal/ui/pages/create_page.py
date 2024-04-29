@@ -14,14 +14,14 @@ def display_add_form():
 
         st.markdown("**required*")
 
-        create_notification = col2.empty()
         submit_button = st.form_submit_button(label="Create")
+        create_notification = col2.empty()
         if submit_button:
             if not title or not price or not picture:
                 st.warning("Ensure all mandatory fields are filled.")
                 st.stop()
             else:
-                with create_notification, st.spinner("Creating advertisement"):
+                with create_notification, st.spinner("Creating advertisement..."):
                     manager.create_item(title, price, description, picture)
 
                 if "create_success" in st.session_state:

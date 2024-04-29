@@ -31,18 +31,17 @@ def create_item(title, price, description, image):
             "description": description,
             "s3_url": image_id,
             "price": price,
-            "owner_id": 1,  # TODO(art22m): change to real
+            "owner_id": st.session_state.user_info["id"],
         }
     )
     headers = {
         "content-type": "application/json; charset=UTF-8",
-        # "Authorization": st.session_state.user_token,
+        "Authorization": st.session_state.user_info["idToken"],
     }
 
     request_object = requests.post(request_ref, headers=headers, data=data)
     try:
         utils.raise_detailed_error(request_object)
-        # st.experimental_rerun()
         st.session_state.create_success = "Advertisement successfully created!"
     except requests.exceptions.HTTPError as error:
         st.session_state.create_warning = str(json.loads(error.args[1])["detail"])

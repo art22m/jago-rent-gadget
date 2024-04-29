@@ -18,7 +18,9 @@ class Storage:
             aws_secret_access_key=secret,
         )
 
-        self.client = session.client(service_name=service_name, endpoint_url=endpoint_url)
+        self.client = session.client(
+            service_name=service_name, endpoint_url=endpoint_url
+        )
         self.bucket = bucket
 
     def save_image(self, item_id, data):
@@ -31,7 +33,9 @@ class Storage:
 
     def get_image(self, item_id):
         key = create_key(item_id)
-        data = self.client.get_object(Bucket=self.bucket, Key=key)["Body"].read()
+        data = self.client.get_object(Bucket=self.bucket, Key=key)[
+            "Body"
+        ].read()
         return data
 
 

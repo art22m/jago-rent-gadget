@@ -21,14 +21,20 @@ def display_add_form():
                 st.warning("Ensure all mandatory fields are filled.")
                 st.stop()
             else:
-                with create_notification, st.spinner("Creating advertisement..."):
+                with create_notification, st.spinner(
+                    "Creating advertisement..."
+                ):
                     manager.create_item(title, price, description, picture)
 
                 if "create_success" in st.session_state:
-                    create_notification.success(st.session_state.create_success)
+                    create_notification.success(
+                        st.session_state.create_success
+                    )
                     del st.session_state.create_success
                 elif "create_warning" in st.session_state:
-                    create_notification.warning(st.session_state.create_warning)
+                    create_notification.warning(
+                        st.session_state.create_warning
+                    )
                     del st.session_state.create_warning
 
 

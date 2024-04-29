@@ -45,7 +45,9 @@ def update_user(db: Session, user_update_dto: UserUpdateDto):
 
 def create_user(db: Session, auth, user: UserCreateDto):
     try:
-        fb_user = auth.create_user_with_email_and_password(user.email, user.password)
+        fb_user = auth.create_user_with_email_and_password(
+            user.email, user.password
+        )
     except requests.exceptions.HTTPError as error:
         err = json.loads(error.args[1])["error"]
         raise HTTPException(status_code=err["code"], detail=err["message"])
@@ -67,7 +69,9 @@ def create_user(db: Session, auth, user: UserCreateDto):
 
 def signin_user(db: Session, auth, user: UserSigninDto):
     try:
-        fb_user = auth.sign_in_with_email_and_password(user.email, user.password)
+        fb_user = auth.sign_in_with_email_and_password(
+            user.email, user.password
+        )
     except requests.exceptions.HTTPError as error:
         err = json.loads(error.args[1])["error"]
         raise HTTPException(status_code=err["code"], detail=err["message"])
@@ -83,5 +87,8 @@ def signin_user(db: Session, auth, user: UserSigninDto):
 def internal_error(message: str):
     return HTTPException(
         status_code=500,
-        detail=f"An internal server error occurred. Try again later. {str(message)}",
+        detail=(
+            "An internal server error occurred. Try again later."
+            f" {str(message)}"
+        ),
     )

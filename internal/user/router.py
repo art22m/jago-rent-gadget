@@ -1,24 +1,25 @@
-import json
-
-import requests
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
 
 from internal.data.auth import pb_auth
 from internal.data.database import get_db
 from internal.user import service
-from internal.user.schemas import *
+from internal.user.schemas import UserCreateDto, UserSigninDto, UserUpdateDto, UserDto
 
 router = APIRouter(prefix="/user", tags=["User operations"])
 
 
 @router.post("/")
-def create_user(user: UserCreateDto, db: Session = Depends(get_db), auth=Depends(pb_auth)):
+def create_user(
+        user: UserCreateDto, db: Session = Depends(get_db), auth=Depends(pb_auth)
+):
     return service.create_user(db, auth, user)
 
 
 @router.get("/signin")
-def signin_user(user: UserSigninDto, db: Session = Depends(get_db), auth=Depends(pb_auth)):
+def signin_user(
+        user: UserSigninDto, db: Session = Depends(get_db), auth=Depends(pb_auth)
+):
     return service.signin_user(db, auth, user)
 
 
@@ -33,7 +34,7 @@ def get_user(user_id: int, db: Session = Depends(get_db)):
 
 
 @router.get("/by-email/{email}", response_model=UserDto)
-def get_user(email: str, db: Session = Depends(get_db)):
+def get_user_email(email: str, db: Session = Depends(get_db)):
     return service.get_user_by_email(db, email=email)
 
 

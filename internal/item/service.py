@@ -10,7 +10,9 @@ from internal.user.service import get_user
 def get_item(db: Session, item_id: int):
     item = db.query(Item).filter(Item.id == item_id).first()
     if not item:
-        raise HTTPException(status_code=404, detail=f"Item with id={item_id} is not found")
+        raise HTTPException(
+            status_code=404, detail=f"Item with id={item_id} is not found"
+        )
     return item
 
 
@@ -45,7 +47,7 @@ def create_item(db: Session, item_create_dto: ItemCreateDto):
         description=item_create_dto.description,
         s3_url=item_create_dto.s3_url,
         price=item_create_dto.price,
-        owner_id=item_create_dto.owner_id
+        owner_id=item_create_dto.owner_id,
     )
     db.add(db_user)
     db.commit()

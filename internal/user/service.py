@@ -6,20 +6,24 @@ from sqlalchemy.orm import Session
 
 from internal.user import models
 from internal.user.models import User
-from internal.user.schemas import UserCreateDto, UserUpdateDto, UserSigninDto
+from internal.user.schemas import UserCreateDto, UserSigninDto, UserUpdateDto
 
 
 def get_user(db: Session, user_id: int):
     user = db.query(User).filter(User.id == user_id).first()
     if not user:
-        raise HTTPException(status_code=404, detail=f"User with id={user_id} is not found")
+        raise HTTPException(
+            status_code=404, detail=f"User with id={user_id} is not found"
+        )
     return user
 
 
 def get_user_by_email(db: Session, email: str):
     user = db.query(User).filter(User.email == email).first()
     if not user:
-        raise HTTPException(status_code=404, detail=f"User with email={email} is not found")
+        raise HTTPException(
+            status_code=404, detail=f"User with email={email} is not found"
+        )
     return user
 
 
@@ -30,7 +34,9 @@ def get_users(db: Session):
 def update_user(db: Session, user_update_dto: UserUpdateDto):
     user = get_user(db, user_id=user_update_dto.id)
     if not user:
-        raise HTTPException(status_code=404, detail=f"User with id={user.id} is not found")
+        raise HTTPException(
+            status_code=404, detail=f"User with id={user.id} is not found"
+        )
     user.email = user_update_dto.email
     user.name = user_update_dto.name
     db.commit()
@@ -75,4 +81,7 @@ def signin_user(db: Session, auth, user: UserSigninDto):
 
 
 def internal_error(message: str):
-    return HTTPException(status_code=500, detail=f"An internal server error occurred. Try again later." + str(message))
+    return HTTPException(
+        status_code=500,
+        detail=f"An internal server error occurred. Try again later. {str(message)}",
+    )

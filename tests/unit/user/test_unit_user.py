@@ -29,4 +29,5 @@ class UserTests(unittest.TestCase):
 
     def test_create_user__firebase_error(self):
         self.mock.create_user_with_email_and_password.return_value.side_effect = requests.exceptions.HTTPError(
-            500, "meow")
+            500, "meow"
+        )

@@ -28,6 +28,6 @@ def client(app):
 def generate_random_email():
     domain = "google.com"  # Replace with your desired domain name
     username_length = random.randint(5, 10)  # Random username length between 5 and 10
-    username = ''.join(random.choices(string.ascii_lowercase, k=username_length))
+    username = "".join(random.choices(string.ascii_lowercase, k=username_length))
     email = f"{username}@{domain}"
     return email

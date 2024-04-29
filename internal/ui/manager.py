@@ -83,5 +83,5 @@ def get_request_by_url(url):
             return data
         else:
             return None
-    except requests.exceptions.RequestException as e:
+    except requests.exceptions.RequestException:
         return None

@@ -1,4 +1,3 @@
-import requests
 import streamlit as st
 
 from internal.ui import manager, menu
@@ -41,7 +40,7 @@ def display_cards():
             for card in items:
                 ct = st.container()
                 with ct:
-                    item_card = create_item_card(card)
+                    _ = create_item_card(card)
         else:
             st.write("There are no devices available for rental")
 

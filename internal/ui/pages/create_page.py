@@ -37,7 +37,7 @@ def display():
     if "user_info" in st.session_state:
         display_add_form()
     else:
-        st.warning('You should be logged in to create add.', icon="⚠️")
+        st.warning("You should be logged in to create add.", icon="⚠️")
         go_to_log_in = st.button("Go to log in page ↗️")
         if go_to_log_in:
             st.switch_page("pages/auth_page.py")

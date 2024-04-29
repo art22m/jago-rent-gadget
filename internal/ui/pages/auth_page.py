@@ -16,10 +16,14 @@ def display_auth_page():
     # Inputs
     email = auth_form.text_input(label="Email")
     username = (
-        auth_form.text_input(label="Username") if selector in {"No"} else auth_form.empty()
+        auth_form.text_input(label="Username")
+        if selector in {"No"}
+        else auth_form.empty()
     )
     password = (
-        auth_form.text_input(label="Password", type="password") if selector in {"Yes", "No"} else auth_form.empty()
+        auth_form.text_input(label="Password", type="password")
+        if selector in {"Yes", "No"}
+        else auth_form.empty()
     )
 
     # Buttons
@@ -35,7 +39,9 @@ def display_auth_page():
 
     def reset_button():
         return auth_form.form_submit_button(
-            label="Reset Password", use_container_width=True, type="primary",
+            label="Reset Password",
+            use_container_width=True,
+            type="primary",
         )
 
     auth_notification = col2.empty()

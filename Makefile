@@ -26,4 +26,4 @@ cc:
 
 .PHONY: cc
 security:
-	$(POETRY) run bandit -r bin/ internal/ tests/
+	$(POETRY) run bandit -c pyproject.toml -r bin/ internal/ tests/

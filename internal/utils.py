@@ -14,6 +14,7 @@ async def validate_firebase(request: Request):
 
     try:
         user = auth.verify_id_token(id_token)
+        print("Token check succeed")
         return user
     except Exception as e:
         raise HTTPException(status_code=401, detail=str(e))

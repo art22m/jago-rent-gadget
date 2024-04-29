@@ -4,7 +4,8 @@ from tests.e2e.conftest import generate_random_email
 def test_create_item__happy_path(client):
     email = generate_random_email()
     client_id = client.post(
-        "api/user", json={"email": email, "password": "password", "name": "name"}
+        "api/user",
+        json={"email": email, "password": "password", "name": "name"},
     ).json()["id"]
 
     create_response = client.post(

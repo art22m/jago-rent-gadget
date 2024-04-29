@@ -14,21 +14,7 @@ router = APIRouter(prefix="/user", tags=["User operations"])
 
 @router.post("/")
 def create_user(user: UserCreateDto, db: Session = Depends(get_db), auth=Depends(pb_auth)):
-    try:
-        result = auth.create_user_with_email_and_password(user.email, user.password)
-    except requests.exceptions.HTTPError as error:
-        err = json.loads(error.args[1])["error"]
-        raise HTTPException(status_code=err["code"], detail=err["message"])
-    except Exception as error:
-        raise internal_error(str(error))
-
-    try:
-        user = service.create_user(db, user)
-    except Exception as error:
-        raise internal_error(str(error))
-
-    print("registered", user.email)
-    return user
+    return service.create_user(db, auth, user)
 
 
 @router.get("/", response_model=list[UserDto])
@@ -49,9 +35,3 @@ def get_user(email: str, db: Session = Depends(get_db)):
 @router.put("/", response_model=UserDto)
 def update_user(user: UserUpdateDto, db: Session = Depends(get_db)):
     return service.update_user(db, user_update_dto=user)
-
-
-# Helpers
-
-def internal_error(message: str):
-    return HTTPException(status_code=500, detail=f"An internal server error occurred. Try again later." + str(message))

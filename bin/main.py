@@ -1,4 +1,4 @@
-import json
+import os
 
 import firebase_admin
 import pyrebase
@@ -18,12 +18,24 @@ def create_app() -> FastAPI:
 
     Base.metadata.create_all(bind=engine)
 
+    fb_config = {
+        "type": os.environ.get("type"),
+        "project_id": os.environ.get("projectId"),
+        "private_key_id": os.environ.get("privateKeyId"),
+        "private_key": os.environ.get("privateKey"),
+        "client_email": os.environ.get("clientEmail"),
+        "client_id": os.environ.get("clientId"),
+        "token_uri": os.environ.get("tokenUri"),
+        "apiKey": os.environ.get("apiKey"),
+        "authDomain": os.environ.get("authDomain"),
+        "projectId": os.environ.get("projectId"),
+        "databaseURL": "",
+        "storageBucket": ""
+    }
+
     if not firebase_admin._apps:
-        cred = credentials.Certificate("./configs/firebase-adminsdk.json")
-        pyrebase.initialize_app(
-            json.load(open("./configs/firebase-pyrebase.json")),
-        ).auth()
-        firebase_admin.initialize_app(cred)
+        firebase_admin.initialize_app(credentials.Certificate(fb_config))
+        pyrebase.initialize_app(fb_config).auth()
 
     return app
 

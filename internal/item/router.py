@@ -4,7 +4,7 @@ from sqlalchemy.orm import Session
 from internal import utils
 from internal.data.database import get_db
 from internal.item import service
-from internal.item.schemas import ItemDto, ItemUpdateDto, ItemCreateDto
+from internal.item.schemas import ItemCreateDto, ItemDto, ItemUpdateDto
 from internal.user.service import get_user
 
 router = APIRouter(prefix="/item", tags=["Item operations"])

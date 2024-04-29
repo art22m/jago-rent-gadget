@@ -1,4 +1,5 @@
 import json
+import os
 import uuid
 
 import requests
@@ -7,12 +8,11 @@ import streamlit as st
 import ui.utils as utils
 from internal.data.s3storage import Storage
 
-creds = json.load(open("./configs/yandex-s3-creds.json"))
 storage = Storage(
-    endpoint_url=creds["endpoint"],
-    bucket=creds["bucket"],
-    access_key=creds["accessKey"],
-    secret=creds["secret"],
+    endpoint_url=os.environ.get("endpoint"),
+    bucket=os.environ.get("bucket"),
+    access_key=os.environ.get("accessKey"),
+    secret=os.environ.get("secret"),
 )
 
 
@@ -50,7 +50,7 @@ def create_item(title, price, description, image):
         )
     except Exception as error:
         st.session_state.create_warning = (
-            "Error: Please try again later " + str(error)
+                "Error: Please try again later " + str(error)
         )
 
 

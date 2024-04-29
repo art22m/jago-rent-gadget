@@ -4,12 +4,8 @@ from sqlalchemy.orm import Session
 from internal.data.auth import pb_auth
 from internal.data.database import get_db
 from internal.user import service
-from internal.user.schemas import (
-    UserCreateDto,
-    UserSigninDto,
-    UserUpdateDto,
-    UserDto,
-)
+from internal.user.schemas import (UserCreateDto, UserDto, UserSigninDto,
+                                   UserUpdateDto)
 
 router = APIRouter(prefix="/user", tags=["User operations"])
 

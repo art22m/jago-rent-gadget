@@ -7,7 +7,8 @@ from ansible.errors import AnsibleError
 from ansible.module_utils._text import to_native
 from ansible.utils.display import Display
 
-from ansible.plugins.inventory import BaseInventoryPlugin, Cacheable, Constructable
+from ansible.plugins.inventory import (BaseInventoryPlugin, Cacheable,
+                                       Constructable)
 
 __metaclass__ = type
 
@@ -53,12 +54,18 @@ EXAMPLES = """
 try:
     import yandexcloud
     from google.protobuf.json_format import MessageToDict
-    from yandex.cloud.compute.v1.instance_service_pb2 import ListInstancesRequest
-    from yandex.cloud.compute.v1.instance_service_pb2_grpc import InstanceServiceStub
-    from yandex.cloud.resourcemanager.v1.cloud_service_pb2 import ListCloudsRequest
-    from yandex.cloud.resourcemanager.v1.cloud_service_pb2_grpc import CloudServiceStub
-    from yandex.cloud.resourcemanager.v1.folder_service_pb2 import ListFoldersRequest
-    from yandex.cloud.resourcemanager.v1.folder_service_pb2_grpc import FolderServiceStub
+    from yandex.cloud.compute.v1.instance_service_pb2 import \
+        ListInstancesRequest
+    from yandex.cloud.compute.v1.instance_service_pb2_grpc import \
+        InstanceServiceStub
+    from yandex.cloud.resourcemanager.v1.cloud_service_pb2 import \
+        ListCloudsRequest
+    from yandex.cloud.resourcemanager.v1.cloud_service_pb2_grpc import \
+        CloudServiceStub
+    from yandex.cloud.resourcemanager.v1.folder_service_pb2 import \
+        ListFoldersRequest
+    from yandex.cloud.resourcemanager.v1.folder_service_pb2_grpc import \
+        FolderServiceStub
 except ImportError:
     raise AnsibleError("The yacloud dynamic inventory plugin requires yandexcloud")
 

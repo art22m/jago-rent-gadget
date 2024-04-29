@@ -5,7 +5,7 @@ import pytest
 from fastapi import HTTPException
 from requests import HTTPError
 
-from internal.user import service, models
+from internal.user import models, service
 from internal.user.schemas import UserCreateDto, UserUpdateDto
 
 TEST_EMAIL = "test@gmail.com"

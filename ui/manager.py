@@ -9,10 +9,10 @@ import ui.utils as utils
 from internal.data.s3storage import Storage
 
 storage = Storage(
-    endpoint_url=os.environ.get("endpoint"),
-    bucket=os.environ.get("bucket"),
-    access_key=os.environ.get("accessKey"),
-    secret=os.environ.get("secret"),
+    endpoint_url=os.environ.get("ENDPOINT"),
+    bucket=os.environ.get("BUCKET"),
+    access_key=os.environ.get("ACCESSKEY"),
+    secret=os.environ.get("SECRET"),
 )
 
 

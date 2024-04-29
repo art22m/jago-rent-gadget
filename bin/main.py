@@ -19,16 +19,16 @@ def create_app() -> FastAPI:
     Base.metadata.create_all(bind=engine)
 
     fb_config = {
-        "type": os.environ.get("type"),
-        "project_id": os.environ.get("projectId"),
-        "private_key_id": os.environ.get("privateKeyId"),
-        "private_key": os.environ.get("privateKey"),
-        "client_email": os.environ.get("clientEmail"),
-        "client_id": os.environ.get("clientId"),
-        "token_uri": os.environ.get("tokenUri"),
-        "apiKey": os.environ.get("apiKey"),
-        "authDomain": os.environ.get("authDomain"),
-        "projectId": os.environ.get("projectId"),
+        "type": os.environ.get("TYPE"),
+        "project_id": os.environ.get("PROJECTID"),
+        "private_key_id": os.environ.get("PRIVATEKEYID"),
+        "private_key": os.environ.get("PRIVATEKEY"),
+        "client_email": os.environ.get("CLIENTEMAIL"),
+        "client_id": os.environ.get("CLIENTID"),
+        "token_uri": os.environ.get("TOKENURI"),
+        "apiKey": os.environ.get("APIKEY"),
+        "authDomain": os.environ.get("AUTHDOMAIN"),
+        "projectId": os.environ.get("PROJECTID"),
         "databaseURL": "",
         "storageBucket": ""
     }

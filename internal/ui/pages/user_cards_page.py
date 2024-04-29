@@ -1,24 +1,29 @@
 import streamlit as st
-
+import time
 from internal.ui import manager, menu
 
 
-def create_item_card(card):
+def create_item_card(item):
     item_card_container = st.container(border=True)
     with item_card_container:
-        header = st.container()
-        header.header(card["title"])
+        st.header(item["title"])
         photo = st.container()
-        image_url = manager.get_image_full_url(card["s3_url"])
+        image_url = manager.get_image_full_url(item["s3_url"])
         photo.image(image_url)
         info_container = st.container(border=True)
         with info_container:
-            if len(card["description"]) != 0:
-                st.write(f"Description: {card['description']}")
-            st.write(f"Price: {card['price']}")
-            delete_button = st.button("Delete")
+            if len(item["description"]) != 0:
+                st.write(f"Description: {item['description']}")
+            st.write(f"Price: {item['price']}")
+            delete_button = st.button("Delete", key=item['id'])
             if delete_button:
-                st.write("ok")
+                status = manager.delete_item(item['id'])
+                if status:
+                    st.success('This is a success message!', icon="✅")
+                    time.sleep(0.4)
+                    st.rerun()
+                else:
+                    st.warning('Something went wrong(', icon="😞")
 
 
 def display_cards(items):
@@ -32,7 +37,7 @@ def display_cards(items):
 
 
 def display_user_cards():
-    user_id = st.session_state.user_info["id"],
+    user_id = st.session_state.user_info["id"]
     user_info = manager.get_user_info_by_id(user_id)
     if user_info is None or len(user_info["items"]) == 0:
         st.write("You don't have any gadgets available for rent yet")

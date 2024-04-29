@@ -85,3 +85,20 @@ def get_request_by_url(url):
             return None
     except requests.exceptions.RequestException as e:
         return None
+
+
+def delete_item(item_id):
+    request_ref = f"http://0.0.0.0:8001/api/item/{item_id}"
+    headers = {
+        "content-type": "application/json; charset=UTF-8",
+        "Authorization": st.session_state.user_info["idToken"],
+    }
+    try:
+        response = requests.delete(request_ref, headers=headers)
+        if response.status_code == 200:
+            data = response.json()
+            return data
+        else:
+            return None
+    except requests.exceptions.RequestException as e:
+        return None

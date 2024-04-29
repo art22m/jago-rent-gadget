@@ -22,7 +22,8 @@ def test_create_item__happy_path(auth_request, client):
             "owner_id": client_id,
         },
         headers={
-            "Authorization": "xGezNUz1yPrIaJXHAV5xQU91uOFa7mdDf3k14CWxn6bBQ8xW2vRiIAknWVT"
+            "Authorization": "xGezNUz1yPrIaJXHAV5xQU91uOFa7md"
+                             "Df3k14CWxn6bBQ8xW2vRiIAknWVT"
         }
     )
     assert create_response.status_code == 200

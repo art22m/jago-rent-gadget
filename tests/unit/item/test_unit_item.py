@@ -18,12 +18,14 @@ class UserTests(unittest.TestCase):
         self.mock = Mock()
 
     def test_get_item(self):
-        self.mock.query.return_value.filter.return_value.first.return_value = "item"
+        self.mock.query.return_value.filter \
+            .return_value.first.return_value = "item"
         item = service.get_item(self.mock, 5)
         assert item == "item"
 
     def test_get_item__not_found(self):
-        self.mock.query.return_value.filter.return_value.first.return_value = None
+        self.mock.query.return_value.filter \
+            .return_value.first.return_value = None
         with pytest.raises(HTTPException) as e:
             service.get_item(self.mock, 5)
         assert str(e.value) == "404: Item with id=5 is not found"
@@ -31,20 +33,25 @@ class UserTests(unittest.TestCase):
     @patch("internal.user.service.get_user")
     def test_get_item_by_user(self, get_user):
         get_user.return_value = "user"
-        self.mock.query.return_value.filter.return_value.all.return_value = "item"
+        self.mock.query.return_value.filter\
+            .return_value.all.return_value = "item"
         item = service.get_items_by_user(self.mock, 5)
         assert item == "item"
 
     def test_get_item_by_user__user_not_found(self):
-        self.mock.query.return_value.filter.return_value.all.return_value = "item"
-        self.mock.query.return_value.filter.return_value.first.return_value = None
+        self.mock.query.return_value.filter\
+            .return_value.all.return_value = "item"
+        self.mock.query.return_value.filter\
+            .return_value.first.return_value = None
         with pytest.raises(HTTPException) as e:
             service.get_items_by_user(self.mock, 5)
         assert str(e.value) == "404: User with id=5 is not found"
 
     def test_create_item(self):
-        self.mock.query.return_value.filter.return_value.all.return_value = "item"
-        self.mock.query.return_value.filter.return_value.first.return_value = None
+        self.mock.query.return_value.filter\
+            .return_value.all.return_value = "item"
+        self.mock.query.return_value.filter\
+            .return_value.first.return_value = None
         item_create_dto = ItemCreateDto(
             **{
                 "title": TEST_TITLE,

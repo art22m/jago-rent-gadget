@@ -35,7 +35,8 @@ def update_user(db: Session, user_update_dto: UserUpdateDto):
     user = get_user(db, user_id=user_update_dto.id)
     if not user:
         raise HTTPException(
-            status_code=404, detail=f"User with id={user_update_dto.id} is not found"
+            status_code=404,
+            detail=f"User with id={user_update_dto.id} is not found"
         )
     user.email = user_update_dto.email
     user.name = user_update_dto.name

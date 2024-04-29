@@ -6,7 +6,7 @@ from sqlalchemy.orm import Session
 
 from internal.user import models
 from internal.user.models import User
-from internal.user.schemas import UserCreateDto, UserUpdateDto
+from internal.user.schemas import UserCreateDto, UserUpdateDto, UserSigninDto
 
 
 def get_user(db: Session, user_id: int):
@@ -39,7 +39,7 @@ def update_user(db: Session, user_update_dto: UserUpdateDto):
 
 def create_user(db: Session, auth, user: UserCreateDto):
     try:
-        result = auth.create_user_with_email_and_password(user.email, user.password)
+        fb_user = auth.create_user_with_email_and_password(user.email, user.password)
     except requests.exceptions.HTTPError as error:
         err = json.loads(error.args[1])["error"]
         raise HTTPException(status_code=err["code"], detail=err["message"])
@@ -54,9 +54,24 @@ def create_user(db: Session, auth, user: UserCreateDto):
     except Exception as error:
         raise internal_error(str(error))
 
-    print("registered", user.email)
-    # TODO: переделать. Надо, что при создании сущности возвращался ее id'шник
-    return db_user
+    fb_user["id"] = db_user.id
+    fb_user["name"] = db_user.name
+    return fb_user
+
+
+def signin_user(db: Session, auth, user: UserSigninDto):
+    try:
+        fb_user = auth.sign_in_with_email_and_password(user.email, user.password)
+    except requests.exceptions.HTTPError as error:
+        err = json.loads(error.args[1])["error"]
+        raise HTTPException(status_code=err["code"], detail=err["message"])
+    except Exception as error:
+        raise internal_error(str(error))
+
+    db_user = get_user_by_email(db, fb_user["email"])
+    fb_user["id"] = db_user.id
+    fb_user["name"] = db_user.name
+    return fb_user
 
 
 def internal_error(message: str):

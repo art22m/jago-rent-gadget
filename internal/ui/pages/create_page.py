@@ -1,6 +1,6 @@
 import streamlit as st
-from internal.ui import manager, menu
 
+from internal.ui import manager, menu
 
 #     id = Column(Integer, primary_key=True)
 #     title = Column(String, index=True)

@@ -1,9 +1,10 @@
 import json
 import uuid
 
-import internal.ui.utils as utils
 import requests
 import streamlit as st
+
+import internal.ui.utils as utils
 from internal.data.s3storage import Storage
 
 creds = json.load(open("./configs/yandex-s3-creds.json"))

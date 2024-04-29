@@ -39,11 +39,3 @@ class Storage:
 
 def create_key(key):
     return f"images/{key}"
-
-# if __name__ == "__main__":
-#     d = "123"
-#     access_key = ""
-#     secret = ""
-#
-#     s3 = S3Storage("s3", "https://storage.yandexcloud.net", access_key, secret, "rent-gadget")
-#     print(s3.get_image(""))

@@ -1,9 +1,10 @@
 import json
 
-import internal.ui.utils as utils
 import pyrebase
 import requests
 import streamlit as st
+
+import internal.ui.utils as utils
 
 pb_auth = pyrebase.initialize_app(
     json.load(open("./configs/firebase-pyrebase.json"))

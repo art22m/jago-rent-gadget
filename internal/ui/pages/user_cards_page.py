@@ -1,5 +1,6 @@
 import streamlit as st
-from internal.ui import menu, manager
+
+from internal.ui import manager, menu
 
 
 def display_user_cards():

@@ -1,6 +1,6 @@
 import os
 
-from sqlalchemy import create_engine, StaticPool
+from sqlalchemy import StaticPool, create_engine
 from sqlalchemy.orm import sessionmaker
 
 from internal.data.database import Base

@@ -1,6 +1,6 @@
 import streamlit as st
 
-from internal.ui import manager, menu
+from ui import manager, menu
 
 
 def display_item_card(item):

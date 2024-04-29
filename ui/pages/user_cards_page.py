@@ -1,6 +1,6 @@
 import streamlit as st
 import time
-from internal.ui import manager, menu
+from ui import manager, menu
 
 
 def create_item_card(item):

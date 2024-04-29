@@ -5,7 +5,7 @@ FLAKE_CC_MAX_THRESHOLD := 10
 
 .PHONY: run-frontend
 run-frontend:
-	$(POETRY) run streamlit run internal/ui/app.py
+	$(POETRY) run streamlit run ui/app.py
 
 .PHONY: run-backend
 run-backend:

@@ -1,5 +1,5 @@
 import streamlit as st
-from internal.ui import auth, menu
+from ui import auth, menu
 
 
 def display_user_info():

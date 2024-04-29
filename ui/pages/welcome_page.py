@@ -1,6 +1,6 @@
 import streamlit as st
 
-from internal.ui import manager
+from ui import manager
 
 
 def display():

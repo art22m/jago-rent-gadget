@@ -1,6 +1,5 @@
 import random
 import string
-
 import pytest
 from fastapi.testclient import TestClient
 
@@ -27,11 +26,11 @@ def client(app):
 
 def generate_random_email():
     domain = "google.com"  # Replace with your desired domain name
-    username_length = random.randint(
+    username_length = random.randint(  # nosec
         5, 10
     )  # Random username length between 5 and 10
     username = "".join(
-        random.choices(string.ascii_lowercase, k=username_length)
+        random.choices(string.ascii_lowercase, k=username_length)  # nosec
     )
     email = f"{username}@{domain}"
     return email

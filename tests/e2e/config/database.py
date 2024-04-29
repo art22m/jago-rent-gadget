@@ -5,7 +5,7 @@ from sqlalchemy.orm import sessionmaker
 
 from internal.data.database import Base
 
-SQLALCHEMY_DATABASE_URL = "sqlite:///" + os.path.abspath(os.getcwd()) + "/tests/e2e/config/test.db"
+SQLALCHEMY_DATABASE_URL = "sqlite:///:memory:"
 engine = create_engine(
     SQLALCHEMY_DATABASE_URL,
     connect_args={"check_same_thread": False},

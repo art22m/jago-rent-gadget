@@ -8,7 +8,7 @@ def test_register_user__happy_path(client):
         json={"email": email, "password": "password", "name": "name"}
     )
     id = create_response.json()["id"]
-    assert create_response.json() == {'email': email, 'id': id, 'name': 'name'}
+    assert create_response.json() == {'id': id, 'name': 'name', 'sessionId': 'as314v'}
     assert create_response.status_code == 200
 
     get_response = client.get(

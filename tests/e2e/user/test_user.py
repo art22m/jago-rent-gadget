@@ -1,4 +1,4 @@
-from tests.e2e.conftest import generate_random_email
+from tests.e2e.fixtures import generate_random_email
 
 
 def test_register_user__happy_path(client):

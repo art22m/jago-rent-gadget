@@ -8,7 +8,7 @@ def display_add_form():
         col1, col2, col3 = st.columns([1, 2, 1])
 
         title = st.text_input(label="Title*")
-        price = st.text_input(label="Price*")
+        price = st.text_input(label="Price*", placeholder="Rubles per day", help="E.g. 100")
         description = st.text_area(label="Description")
         picture = st.file_uploader(
             label="Upload the picture*",

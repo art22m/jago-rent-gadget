@@ -1,4 +1,4 @@
-import json
+import os
 
 import pyrebase
 import requests
@@ -6,9 +6,22 @@ import streamlit as st
 
 import ui.utils as utils
 
-pb_auth = pyrebase.initialize_app(
-    json.load(open("./configs/firebase-pyrebase.json"))
-).auth()
+fb_config = {
+    "type": os.environ.get("TYPE"),
+    "project_id": os.environ.get("PROJECTID"),
+    "private_key_id": os.environ.get("PRIVATEKEYID"),
+    "private_key": os.environ.get("PRIVATEKEY"),
+    "client_email": os.environ.get("CLIENTEMAIL"),
+    "client_id": os.environ.get("CLIENTID"),
+    "token_uri": os.environ.get("TOKENURI"),
+    "apiKey": os.environ.get("APIKEY"),
+    "authDomain": os.environ.get("AUTHDOMAIN"),
+    "projectId": os.environ.get("PROJECTID"),
+    "databaseURL": "",
+    "storageBucket": ""
+}
+
+pb_auth = pyrebase.initialize_app(fb_config).auth()
 
 
 def create_user_with_email_and_password(email, username, password):

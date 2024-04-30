@@ -10,6 +10,21 @@ from internal.data.database import Base, engine
 from internal.item.router import router as item_router
 from internal.user.router import router as user_router
 
+fb_config = {
+    "type": os.environ.get("TYPE"),
+    "project_id": os.environ.get("PROJECTID"),
+    "private_key_id": os.environ.get("PRIVATEKEYID"),
+    "private_key": os.environ.get("PRIVATEKEY"),
+    "client_email": os.environ.get("CLIENTEMAIL"),
+    "client_id": os.environ.get("CLIENTID"),
+    "token_uri": os.environ.get("TOKENURI"),
+    "apiKey": os.environ.get("APIKEY"),
+    "authDomain": os.environ.get("AUTHDOMAIN"),
+    "projectId": os.environ.get("PROJECTID"),
+    "databaseURL": "",
+    "storageBucket": ""
+}
+
 
 def create_app() -> FastAPI:
     app = FastAPI()
@@ -17,21 +32,6 @@ def create_app() -> FastAPI:
     app.include_router(user_router, prefix="/api")
 
     Base.metadata.create_all(bind=engine)
-
-    fb_config = {
-        "type": os.environ.get("TYPE"),
-        "project_id": os.environ.get("PROJECTID"),
-        "private_key_id": os.environ.get("PRIVATEKEYID"),
-        "private_key": os.environ.get("PRIVATEKEY"),
-        "client_email": os.environ.get("CLIENTEMAIL"),
-        "client_id": os.environ.get("CLIENTID"),
-        "token_uri": os.environ.get("TOKENURI"),
-        "apiKey": os.environ.get("APIKEY"),
-        "authDomain": os.environ.get("AUTHDOMAIN"),
-        "projectId": os.environ.get("PROJECTID"),
-        "databaseURL": "",
-        "storageBucket": ""
-    }
 
     if not firebase_admin._apps:
         firebase_admin.initialize_app(credentials.Certificate(fb_config))

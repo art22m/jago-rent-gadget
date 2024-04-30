@@ -26,7 +26,7 @@ pb_auth = pyrebase.initialize_app(fb_config).auth()
 
 
 def create_user_with_email_and_password(email, username, password):
-    request_ref = "http://0.0.0.0:8001/api/user"
+    request_ref = utils.get_address("/api/user")
     headers = {"content-type": "application/json; charset=UTF-8"}
     data = json.dumps({"email": email, "name": username, "password": password})
     request_object = requests.post(request_ref, headers=headers,
@@ -36,7 +36,7 @@ def create_user_with_email_and_password(email, username, password):
 
 
 def signin_with_email_and_password(email, password):
-    request_ref = "http://0.0.0.0:8001/api/user/signin"
+    request_ref = utils.get_address("/api/user/signin")
     headers = {"content-type": "application/json; charset=UTF-8"}
     data = json.dumps({"email": email, "password": password})
     request_object = requests.get(request_ref, headers=headers,

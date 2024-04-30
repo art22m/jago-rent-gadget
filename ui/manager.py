@@ -24,7 +24,7 @@ def create_item(title, price, description, image):
         st.error("Error", e)
         return
 
-    request_ref = "http://0.0.0.0:8001/api/item"
+    request_ref = utils.get_address("/api/item")
     data = json.dumps(
         {
             "title": title,
@@ -66,17 +66,17 @@ def get_image(item_id):
 
 
 def get_user_info_by_id(user_id):
-    request_ref = f"http://0.0.0.0:8001/api/user/{user_id}"
+    request_ref = utils.get_address(f"/api/user/{user_id}")
     return get_request_by_url(request_ref)
 
 
 def get_user_id_by_email(email):
-    request_ref = f"http://0.0.0.0:8001/api/user/by-email/{email}"
+    request_ref = utils.get_address(f"/api/user/by-email/{email}")
     return get_request_by_url(request_ref)
 
 
 def get_items():
-    request_ref = "http://0.0.0.0:8001/api/item/"
+    request_ref = utils.get_address("/api/item/")
     return get_request_by_url(request_ref)
 
 
@@ -93,7 +93,7 @@ def get_request_by_url(url):
 
 
 def delete_item(item_id):
-    request_ref = f"http://0.0.0.0:8001/api/item/{item_id}"
+    request_ref = utils.get_address(f"/api/item/{item_id}")
     headers = {
         "content-type": "application/json; charset=UTF-8",
         "Authorization": st.session_state.user_info["idToken"],

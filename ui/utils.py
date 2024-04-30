@@ -11,3 +11,7 @@ def raise_detailed_error(request_object):
         request_object.raise_for_status()
     except requests.exceptions.HTTPError as error:
         raise requests.exceptions.HTTPError(error, request_object.text)
+
+
+def get_address(route):
+    return "http://0.0.0.0:8001" + route

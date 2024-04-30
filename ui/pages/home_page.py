@@ -17,7 +17,7 @@ def display_item_card(item):
                 st.write(item["description"])
                 price_and_user_container = st.container(border=True)
                 with price_and_user_container:
-                    st.write(f"price: {item['price']}")
+                    st.write(f"price: {item['price']} rub/day")
                     col1, col2 = st.columns(2)
                     col1.write(f"owner: {user_info['name']}")
                     col2.write(f"contacts: {user_info['email']}")

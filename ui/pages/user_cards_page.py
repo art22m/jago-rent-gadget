@@ -16,7 +16,7 @@ def create_item_card(item):
         with info_container:
             if len(item["description"]) != 0:
                 st.write(f"Description: {item['description']}")
-            st.write(f"Price: {item['price']}")
+            st.write(f"Price: {item['price']} rub/day")
             delete_button = st.button("Delete", key=item['id'])
             if delete_button:
                 status = manager.delete_item(item['id'])

@@ -14,4 +14,4 @@ def raise_detailed_error(request_object):
 
 
 def get_address(route):
-    return "http://0.0.0.0:8001" + route
+    return "http://backend:8001" + route

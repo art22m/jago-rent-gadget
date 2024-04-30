@@ -2,4 +2,7 @@
 showSidebarNavigation = false
 
 [server]
-enableCors = false
+headless=true
+enableCORS = false
+enableWebsocketCompression=false
+enableXsrfProtection=false
